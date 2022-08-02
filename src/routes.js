@@ -9,25 +9,25 @@ import DashboardPage from './views/Dashboard/Dashboard'
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
+    path: "/mytask/dashboard",
     name: "Dashboard",
     icon: Dashboard,
     component: DashboardPage,
   },
   {
-    path: "/user",
+    path: "/mytask/user",
     name: "User Profile",
     icon: Person,
     component: UserProfile,
   },
   {
-    path: "/tasklist",
+    path: "/mytask/tasklist",
     name: "Task List",
     icon: "content_paste",
     component: TableList,
   },
   {
-    path: "/createTask",
+    path: "/mytask/createTask",
     name: "Create task",
     icon: CreateIcon,
     component: CreateTask,

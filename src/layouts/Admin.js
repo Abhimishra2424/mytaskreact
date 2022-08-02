@@ -19,6 +19,8 @@ import logo from "../assets/img/reactlogo.png";
 
 let ps;
 
+console.log("routes ====",routes)
+
 const switchRoutes = (
     <Switch>
         {routes.map((prop, key) => {
