@@ -19,8 +19,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" >
+        My Style
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -84,10 +84,6 @@ export default function Login() {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -95,14 +91,9 @@ export default function Login() {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Login
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link to="/" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
               <Link to="/register" variant="body2">
                 {"Don't have an account? Sign Up"}

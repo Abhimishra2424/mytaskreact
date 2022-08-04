@@ -1,45 +1,48 @@
-import React, { useEffect } from "react";
-import { Route, Switch, Redirect, useLocation, } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 
-import Login from './views/Login/Login';
-import Admin from './layouts/Admin'
+import Login from "./views/Login/Login";
+import Admin from "./layouts/Admin";
 import Register from "./views/Register/Register";
-
-
-let user = false;
+import LandingPage from "./views/LandingPage/LandingPage";
 
 const App = () => {
+  const [user, setUser] = useState(false);
 
-  let location = useLocation()
+  let location = useLocation();
 
-  console.log("location====", location)
+  console.log("location====", location);
 
-  // useEffect(() => {
-  //   document.body.classList.add("white-content");
-  //   return function cleanup() {
-  //     document.body.classList.remove("white-content");
-  //   };
-  // });
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={(props) =>
+        user ? <Component {...props} /> : <Redirect to="/" />
+      }
+    />
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      setUser(true);
+    } else {
+      setUser(false);
+    }
+  }, []);
 
   return (
     <Switch>
-      {
-        user ? (
-          <Route path="/mytask" exact component={Admin} />
-        ) : (
-          <>
-            <Route path="/" exact component={Login} />
-            <Route path="/register" exact component={Register} />
-            <Route path="*"
-              render={() => {
-                <div>NOT Found</div>
-              }}
-            />
-          </>
-        )
-      }
+      {user === false ? (
+        <>
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/register" exact component={Register} />
+        </>
+      ) : (
+        <PrivateRoute path="/mytask" component={Admin} />
+      )}
     </Switch>
-  )
-}
+  );
+};
 
-export default App
+export default App;
