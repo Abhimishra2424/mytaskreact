@@ -5,9 +5,12 @@ import Login from "./views/Login/Login";
 import Admin from "./layouts/Admin";
 import Register from "./views/Register/Register";
 import LandingPage from "./views/LandingPage/LandingPage";
+import { useAppContext } from "./context/appContext";
 
 const App = () => {
-  const [user, setUser] = useState(false);
+  // const [user, setUser] = useState(false);
+
+  const { user } = useAppContext();
 
   let location = useLocation();
 
@@ -24,15 +27,15 @@ const App = () => {
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
-      setUser(true);
+      // setUser(true);
     } else {
-      setUser(false);
+      // setUser(false);
     }
   }, []);
 
   return (
     <Switch>
-      {user === false ? (
+      {user === null ? (
         <>
           <Route path="/" exact component={LandingPage} />
           <Route path="/login" exact component={Login} />
