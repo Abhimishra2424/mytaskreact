@@ -1,46 +1,62 @@
-import { Button } from '@material-ui/core'
-import React from 'react'
+import { Button, makeStyles, TextField } from "@material-ui/core";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import RealMeLogo from '../../../src/realbooks.png'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const useStyles = makeStyles({
+  button: {
+    background: "#304ED8",
+    color: "#fff",
+    "&:hover": {
+      background: "#3D5AFE",
+    },
+  },
+});
 
 const CompanyRegister = () => {
+  const classes = useStyles();
+  const [companyData, setCompanyData] = useState({
+    companyName: "",
+    companyEmail: "",
+    companyPassword: "",
+  });
+
+  const handleCompanySave = (e) => {
+    e.preventDefault();
+    if (companyData.companyName === "" || companyData.companyEmail === "" || companyData.companyPassword === "") {
+      toast.error("Please fill all the fields required");
+    }
+  }
+
+
   return (
     <div>
+      <ToastContainer />
       <section className="mb-40">
         <nav className="navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between">
           <div className="px-6 w-full flex flex-wrap items-center justify-between">
             <div className="flex items-center">
-              <button
-                className="navbar-toggler border-0 py-3 lg:hidden leading-none text-xl bg-transparent text-gray-600 hover:text-gray-700 focus:text-gray-700 transition-shadow duration-150 ease-in-out mr-2"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContentY"
-                aria-controls="navbarSupportedContentY"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  data-prefix="fas"
-                  className="w-5"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 448 512"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
-                  ></path>
-                </svg>
-              </button>
-              <a className="navbar-brand text-blue-600" href="#!">
-                <svg className="w-5 h-5 ml-2 lg:ml-0 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                  <path fill="currentColor" d="M485.5 0L576 160H474.9L405.7 0h79.8zm-128 0l69.2 160H149.3L218.5 0h139zm-267 0h79.8l-69.2 160H0L90.5 0zM0 192h100.7l123 251.7c1.5 3.1-2.7 5.9-5 3.3L0 192zm148.2 0h279.6l-137 318.2c-1 2.4-4.5 2.4-5.5 0L148.2 192zm204.1 251.7l123-251.7H576L357.3 446.9c-2.3 2.7-6.5-.1-5-3.2z"></path>
-                </svg>
-              </a>
+              <Link className="navbar-brand text-blue-600" to="/">
+                <img src={RealMeLogo} alt="RealMe" style={{
+                  width: '40px',
+                  height: '40px',
+                }}
+                />
+              </Link>
             </div>
             <div className="flex items-center items-center lg:ml-auto">
-              {/* <button type="button" className="inline-block px-6 py-2.5 mr-2 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">Login</button> */}
-              <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">Login with Company</button>
+              <Button
+                type="button"
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                size="large"
+                startIcon={<LockOpenIcon />}
+              ><Link to="/login">Login</Link></Button>
             </div>
           </div>
         </nav>
@@ -49,26 +65,67 @@ const CompanyRegister = () => {
           <div className="container mx-auto xl:px-32">
             <div className="grid lg:grid-cols-2 gap-12 flex items-center">
               <div className="mt-12 lg:mt-0">
-                <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">The best offer <br /><span className="text-blue-600">for your business</span></h1>
-                {/* <p className="text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Eveniet, itaque accusantium odio, soluta, corrupti aliquam
-                  quibusdam tempora at cupiditate quis eum maiores libero
-                  veritatis? Dicta facilis sint aliquid ipsum atque?
-                </p> */}
+                <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
+                  The best Task Management <br />
+                  <span className="text-blue-600">For Your Business</span>
+                </h1>
               </div>
               <div className="mb-12 lg:mb-0">
                 <div className="block rounded-lg shadow-lg bg-white px-6 py-12 md:px-12">
-                  <form>
-                    <input type="password" className="form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Company Name" />
-                    <input type="email" className="form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Company Email address" />
-                    <input type="password" className="form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Company Password" />
+                  <form onSubmit={handleCompanySave}>
+                    <TextField
+                      id="companyName"
+                      label="Company Name*"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      value={companyData.companyName}
+                      onChange={(e) =>
+                        setCompanyData({
+                          ...companyData,
+                          companyName: e.target.value,
+                        })
+                      }
 
+
+                    />
+                    <TextField
+                      id="companyEmail"
+                      label="Company Email*"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      type={"email"}
+                      value={companyData.companyEmail}
+                      onChange={(e) =>
+                        setCompanyData({
+                          ...companyData,
+                          companyEmail: e.target.value,
+                        })
+                      }
+
+                    />
+                    <TextField
+                      id="companyPassword"
+                      label="Company Password*"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      type="password"
+                      value={companyData.companyPassword}
+                      onChange={(e) =>
+                        setCompanyData({
+                          ...companyData,
+                          companyPassword: e.target.value,
+                        })
+                      }
+
+                    />
                     <Button
-                      type="submit"
                       variant="contained"
-                      color="primary"
-                      className="inline-block px-6 py-2.5 mb-6 w-full bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                      fullWidth
+                      type="submit"
+                      className={classes.button}
                     >
                       Create Company
                     </Button>
@@ -80,7 +137,7 @@ const CompanyRegister = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default CompanyRegister
+export default CompanyRegister;
