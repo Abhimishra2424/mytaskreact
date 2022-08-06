@@ -1,8 +1,11 @@
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import GraphicEqIcon from "@material-ui/icons/GraphicEq";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import RealMeLogo from '../../../src/realbooks.png'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles({
   button: {
@@ -24,18 +27,25 @@ const CompanyRegister = () => {
 
   const handleCompanySave = (e) => {
     e.preventDefault();
-    console.log("companyData", companyData);
+    if (companyData.companyName === "" || companyData.companyEmail === "" || companyData.companyPassword === "") {
+      toast.error("Please fill all the fields required");
+    }
   }
 
 
   return (
     <div>
+      <ToastContainer />
       <section className="mb-40">
         <nav className="navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between">
           <div className="px-6 w-full flex flex-wrap items-center justify-between">
             <div className="flex items-center">
               <Link className="navbar-brand text-blue-600" to="/">
-                <GraphicEqIcon className="mr-2" />
+                <img src={RealMeLogo} alt="RealMe" style={{
+                  width: '40px',
+                  height: '40px',
+                }}
+                />
               </Link>
             </div>
             <div className="flex items-center items-center lg:ml-auto">
@@ -46,7 +56,7 @@ const CompanyRegister = () => {
                 color="primary"
                 size="large"
                 startIcon={<LockOpenIcon />}
-              >Login</Button>
+              ><Link to="/login">Login</Link></Button>
             </div>
           </div>
         </nav>
@@ -65,7 +75,7 @@ const CompanyRegister = () => {
                   <form onSubmit={handleCompanySave}>
                     <TextField
                       id="companyName"
-                      label="Company Name"
+                      label="Company Name*"
                       variant="outlined"
                       fullWidth
                       margin="normal"
@@ -76,10 +86,12 @@ const CompanyRegister = () => {
                           companyName: e.target.value,
                         })
                       }
+
+
                     />
                     <TextField
                       id="companyEmail"
-                      label="Company Email"
+                      label="Company Email*"
                       variant="outlined"
                       fullWidth
                       margin="normal"
@@ -91,10 +103,11 @@ const CompanyRegister = () => {
                           companyEmail: e.target.value,
                         })
                       }
+
                     />
                     <TextField
                       id="companyPassword"
-                      label="Company Password"
+                      label="Company Password*"
                       variant="outlined"
                       fullWidth
                       margin="normal"
@@ -106,6 +119,7 @@ const CompanyRegister = () => {
                           companyPassword: e.target.value,
                         })
                       }
+
                     />
                     <Button
                       variant="contained"

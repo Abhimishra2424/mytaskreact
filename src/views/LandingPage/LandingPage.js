@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import GraphicEqIcon from '@material-ui/icons/GraphicEq';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import RealMeLogo from '../../../src/realbooks.png'
 
 
 const useStyles = makeStyles({
@@ -27,7 +28,11 @@ export default function LandingPage() {
                             <div className="flex items-center">
 
                                 <Link className="navbar-brand text-blue-600" to="/">
-                                    <GraphicEqIcon className="mr-2" />
+                                    <img src={RealMeLogo} alt="RealMe" style={{
+                                        width: '40px',
+                                        height: '40px',
+                                    }}
+                                    />
                                 </Link>
                             </div>
                             <div className="flex items-center lg:ml-auto">
@@ -38,7 +43,7 @@ export default function LandingPage() {
                                     color="primary"
                                     size="large"
                                     startIcon={<LockOpenIcon />}
-                                >Login</Button>
+                                ><Link to="/login">Login</Link></Button>
                             </div>
                         </div>
                     </nav>
