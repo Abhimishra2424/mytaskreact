@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 
 import Login from "./views/Login/Login";
@@ -6,6 +6,7 @@ import Admin from "./layouts/Admin";
 import Register from "./views/Register/Register";
 import LandingPage from "./views/LandingPage/LandingPage";
 import { useAppContext } from "./context/appContext";
+import CompanyRegister from "./views/companyRegister/CompanyRegister";
 
 const App = () => {
   // const [user, setUser] = useState(false);
@@ -39,6 +40,7 @@ const App = () => {
         <>
           <Route path="/" exact component={LandingPage} />
           <Route path="/login" exact component={Login} />
+          <Route path="/company-register" exact component={CompanyRegister} />
           <Route path="/register" exact component={Register} />
         </>
       ) : (
