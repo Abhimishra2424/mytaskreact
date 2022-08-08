@@ -1,20 +1,20 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { useAppContext } from "../context/appContext";
 
-export default function PrivateRoute({ component: Component, ...rest }) {
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const { token } = useAppContext();
 
- const token = localStorage.getItem('token');
- console.log(token);
   return (
+    // Show the component only when the user is logged in
+    // Otherwise, redirect the user to /signin page
     <Route
       {...rest}
       render={(props) =>
-        token ? (
-          <Component {...props}></Component>
-        ) : (
-          <Redirect to="/" />
-        )
+        token ? <Component {...props} /> : <Redirect to="/" />
       }
-    ></Route>
+    />
   );
-}
+};
+
+export default PrivateRoute;

@@ -6,6 +6,7 @@ import CreateTask from "./views/CreateTask/CreateTask";
 import UserProfile from "./views/UserProfile/UserProfile.js";
 import TableList from "./views/TableList/TableList.js";
 import DashboardPage from './views/Dashboard/Dashboard'
+import CreateEmployee from "./views/CreateEmployee/CreateEmployee";
 
 const dashboardRoutes = [
   {
@@ -14,12 +15,12 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage,
   },
-  {
-    path: "/mytask/user",
-    name: "User Profile",
-    icon: Person,
-    component: UserProfile,
-  },
+  // {
+  //   path: "/mytask/user",
+  //   name: "User Profile",
+  //   icon: Person,
+  //   component: UserProfile,
+  // },
   {
     path: "/mytask/tasklist",
     name: "Task List",
@@ -32,7 +33,13 @@ const dashboardRoutes = [
     icon: CreateIcon,
     component: CreateTask,
   },
-
+  {
+    path: "/mytask/createEmployee",
+    isAdmin: true,
+    name: "Create Employee",
+    icon: CreateIcon,
+    component: CreateEmployee,
+  },
 ];
 
 export default dashboardRoutes;

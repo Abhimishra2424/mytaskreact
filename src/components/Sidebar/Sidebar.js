@@ -12,10 +12,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import styles from "../../assets/jss/material-dashboard-react/components/sidebarStyle.js";
+import { useAppContext } from "../../context/appContext.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
+  const { company, token } = useAppContext();
   const classes = useStyles();
   let location = useLocation();
 
