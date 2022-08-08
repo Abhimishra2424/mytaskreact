@@ -30,6 +30,7 @@ const CompanyRegister = () => {
     companyName: "",
     companyEmail: "",
     companyPassword: "",
+    companyRole: "Admin",
   });
 
   const handleCompanySave = (e) => {
@@ -43,8 +44,7 @@ const CompanyRegister = () => {
     }
 
   }
-
-
+  
   return (
     <div>
       <ToastContainer />

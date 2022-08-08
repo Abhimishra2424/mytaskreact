@@ -17,6 +17,7 @@ import styles from "../assets/jss/material-dashboard-react/layouts/adminStyle.js
 import bgImage from "../assets/img/sidebar-2.jpg";
 import logo from "../assets/img/reactlogo.png";
 import SubDashboard from "../views/SubDashboard/SubDashboard";
+import { useAppContext } from "../context/appContext";
 
 let ps;
 
@@ -38,6 +39,7 @@ const switchRoutes = (
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
+    const { company, token } = useAppContext();
     // styles
     const classes = useStyles();
     // ref to help us initialize PerfectScrollbar on windows devices
