@@ -6,6 +6,9 @@ import {
     SET_COMPANY_BEGIN,
     SET_COMPANY_SUCCESS,
     SET_COMPANY_ERROR,
+    LOGIN_COMPANY_BEGIN,
+    LOGIN_COMPANY_SUCCESS,
+    LOGIN_COMPANY_ERROR,
     LOGOUT_USER,
 } from './actions'
 
@@ -59,11 +62,36 @@ const AppProvider = ({ children }) => {
         }
     }
 
+    const loginCompany = async ({ companyEmail, companyPassword }) => {
+        console.log('loginCompany', companyEmail)
+        console.log('loginCompany', companyPassword)
+        // dispatch({ type: LOGIN_COMPANY_BEGIN })
+        // try {
+        //     const { data } = await axios.post(`http://localhost:5000/api/company/login`, {
+        //         companyEmail,
+        //         companyPassword,
+        //     })
+
+        //     const { company: newCompany, token } = data
+        //     dispatch({
+        //         type: LOGIN_COMPANY_SUCCESS,
+        //         payload: { company: newCompany, token },
+        //     })
+        //     addUserToLocalStorage({ company: newCompany, token })
+        // } catch (error) {
+        //     dispatch({
+        //         type: LOGIN_COMPANY_ERROR,
+        //         payload: { msg: error.response.data.msg },
+        //     })
+        // }
+    }
+
     return (
         <AppContext.Provider
             value={{
                 ...state,
                 createCompany,
+                loginCompany,
                 logoutUser
             }}
         >

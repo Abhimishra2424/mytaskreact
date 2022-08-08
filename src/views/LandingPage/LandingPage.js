@@ -38,16 +38,30 @@ export default function LandingPage() {
                                     />
                                 </Link>
                             </div>
-                            <div className="flex items-center lg:ml-auto">
+                            <div className="flex items-center lg:ml-auto ">
                                 <Button
                                     type="button"
                                     className={classes.button}
                                     variant="contained"
                                     color="primary"
-                                    size="large"
+                                    size="small"
+                                     style={{
+                                        marginRight: '10px',
+                                     }}
                                     startIcon={<LockOpenIcon />}
-                                ><Link to="/login">Login</Link></Button>
+                                ><Link to="/company-login">Company Login</Link></Button>
+
+                                 <Button
+                                    type="button"
+                                    className={classes.button}
+                                    variant="contained"
+                                    color="primary"
+                                    size="small"
+                                    startIcon={<LockOpenIcon />}
+                                ><Link to="/employee-login">Employee Login</Link></Button>
+                               
                             </div>
+                            
                         </div>
                     </nav>
 
@@ -57,7 +71,7 @@ export default function LandingPage() {
                             variant="contained"
                             className={classes.button}
                         >
-                         {company ? <Link to="/login">Login</Link>  : <Link to="/company-register">Create Company</Link> }   
+                         {company ? <Link to="/company-login">Company Login</Link>  : <Link to="/company-register">Create Company</Link> }   
                         </Button>
                     </div>
                 </section>
