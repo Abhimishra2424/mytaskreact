@@ -10,7 +10,7 @@ import { useAppContext } from "./context/appContext";
 
 const App = () => {
 
-  const { isLoading, company, token } =
+  const { company, token } =
     useAppContext()
 
   let location = useLocation();
