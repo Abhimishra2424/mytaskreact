@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch, Redirect, useLocation, useHistory } from "react-router-dom";
 
-import Login from "./views/Login/Login";
+import companyLogin from "./views/companyLogin/companyLogin";
 import Admin from "./layouts/Admin";
 import LandingPage from "./views/LandingPage/LandingPage";
 
@@ -10,7 +10,7 @@ import { useAppContext } from "./context/appContext";
 
 const App = () => {
 
-  const { isLoading, company, token } =
+  const { company, token } =
     useAppContext()
 
   let location = useLocation();
@@ -30,7 +30,7 @@ const App = () => {
   useEffect(() => {
 
     if (token === null) {
-      history.push("/login");
+      history.push("/company-login");
     } else if (company) {
       history.push("/");
     }
@@ -43,7 +43,7 @@ const App = () => {
 
       <>
         <Route path="/" exact component={LandingPage} />
-        <Route path="/login" exact component={Login} />
+        <Route path="/company-login" exact component={companyLogin} />
         <Route path="/company-register" exact component={CompanyRegister} />
       </>
 

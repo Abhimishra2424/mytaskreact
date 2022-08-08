@@ -140,7 +140,7 @@ const CompanyRegister = () => {
                       className={classes.button}
                       disabled={isLoading}
                     >
-                      Create Company
+                       Register Company
                     </Button>
                   </form>
                 </div>
