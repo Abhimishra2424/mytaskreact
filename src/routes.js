@@ -8,6 +8,9 @@ import TableList from "./views/TableList/TableList.js";
 import DashboardPage from './views/Dashboard/Dashboard'
 import CreateEmployee from "./views/CreateEmployee/CreateEmployee";
 
+const company = localStorage.getItem('company')
+console.log(company)
+
 const dashboardRoutes = [
   {
     path: "/mytask/dashboard",
@@ -35,10 +38,9 @@ const dashboardRoutes = [
   },
   {
     path: "/mytask/createEmployee",
-    isAdmin: true,
     name: "Create Employee",
     icon: CreateIcon,
-    component: CreateEmployee,
+    component: CreateEmployee
   },
 ];
 
