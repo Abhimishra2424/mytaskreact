@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from "../../context/appContext";
 
+import { useHistory } from "react-router-dom"
+
 const useStyles = makeStyles({
   button: {
     background: "#304ED8",
@@ -20,6 +22,7 @@ const useStyles = makeStyles({
 
 const CompanyRegister = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { isLoading, createCompany } =
     useAppContext()
 
@@ -34,10 +37,11 @@ const CompanyRegister = () => {
     if (companyData.companyName === "" || companyData.companyEmail === "" || companyData.companyPassword === "") {
       toast.error("Please fill all the fields required");
     }
-
     else {
       createCompany({ company: companyData });
+      history.push("/");
     }
+
   }
 
 

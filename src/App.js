@@ -28,12 +28,14 @@ const App = () => {
   );
 
   useEffect(() => {
-    if (!token) {
-      history.push("/mytask");
-    } else {
+
+    if (token === null) {
+      history.push("/login");
+    } else if (company) {
       history.push("/");
     }
-  }, [history, token])
+
+  }, [company, history, token])
 
 
   return (
