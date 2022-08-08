@@ -1,0 +1,45 @@
+import {
+    // LOGOUT_USER,
+    SET_COMPANY_BEGIN,
+    SET_COMPANY_SUCCESS,
+    SET_COMPANY_ERROR,
+
+} from './actions'
+
+// import { initialState } from './appContext'
+
+const reducer = (state, action) => {
+
+    if (action.type === SET_COMPANY_BEGIN) {
+        return { ...state, isLoading: true }
+    }
+    if (action.type === SET_COMPANY_SUCCESS) {
+        return {
+            ...state,
+            isLoading: true,
+            token: action.payload.token,
+            company: action.payload.company,
+        }
+    }
+    if (action.type === SET_COMPANY_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload.msg,
+        }
+    }
+    // if (action.type === LOGOUT_USER) {
+    //     return {
+    //         ...initialState,
+    //         user: null,
+    //         token: null,
+    //         jobLocation: '',
+    //         userLocation: '',
+    //     }
+    // }
+
+
+    throw new Error(`no such action : ${action.type}`)
+}
+
+export default reducer
