@@ -1,54 +1,43 @@
 import React, { useEffect } from "react";
-import { Route, Switch, Redirect, useLocation, useHistory } from "react-router-dom";
-
-import companyLogin from "./views/companyLogin/companyLogin";
-import Admin from "./layouts/Admin";
-import LandingPage from "./views/LandingPage/LandingPage";
-
-import CompanyRegister from "./views/companyRegister/CompanyRegister";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { useAppContext } from "./context/appContext";
 
+import Admin from "./layouts/Admin";
+import LandingPage from "./views/LandingPage/LandingPage";
+import CompanyRegister from "./views/companyRegister/CompanyRegister";
+import CompanyLogin from "./views/companyLogin/CompanyLogin";
+import PrivateRoute from "./components/PrivateRoute";
+
 const App = () => {
+  const { company, token } = useAppContext();
 
-  const { company, token } =
-    useAppContext()
-
-  let location = useLocation();
   let history = useHistory();
 
-  console.log("location====", location);
-
-  const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        token ? <Component {...props} /> : <Redirect to="/" />
-      }
-    />
-  );
-
   useEffect(() => {
-
     if (token === null) {
-      history.push("/company-login");
-    } else if (company) {
       history.push("/");
+    }else if(token){
+      history.push("/mytask");
     }
-
   }, [company, history, token])
-
 
   return (
     <Switch>
-
       <>
-        <Route path="/" exact component={LandingPage} />
-        <Route path="/company-login" exact component={companyLogin} />
-        <Route path="/company-register" exact component={CompanyRegister} />
+        {token === null ? (
+          <>
+            <Route path="/" exact component={LandingPage} />
+            <Route path="/company-login" exact component={CompanyLogin} />
+            <Route
+              path="/company-register"
+              exact
+              component={CompanyRegister}
+            />
+          </>
+        ) : (
+          <PrivateRoute path="/mytask" exact component={Admin} />
+        )}
       </>
-
-      <PrivateRoute path="/mytask" component={Admin} />
-
     </Switch>
   );
 };

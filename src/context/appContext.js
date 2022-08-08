@@ -63,27 +63,25 @@ const AppProvider = ({ children }) => {
     }
 
     const loginCompany = async ({ companyEmail, companyPassword }) => {
-        console.log('loginCompany', companyEmail)
-        console.log('loginCompany', companyPassword)
-        // dispatch({ type: LOGIN_COMPANY_BEGIN })
-        // try {
-        //     const { data } = await axios.post(`http://localhost:5000/api/company/login`, {
-        //         companyEmail,
-        //         companyPassword,
-        //     })
+        dispatch({ type: LOGIN_COMPANY_BEGIN })
+        try {
+            const { data } = await axios.post(`http://localhost:5000/api/company/login`, {
+                companyEmail,
+                companyPassword,
+            })
 
-        //     const { company: newCompany, token } = data
-        //     dispatch({
-        //         type: LOGIN_COMPANY_SUCCESS,
-        //         payload: { company: newCompany, token },
-        //     })
-        //     addUserToLocalStorage({ company: newCompany, token })
-        // } catch (error) {
-        //     dispatch({
-        //         type: LOGIN_COMPANY_ERROR,
-        //         payload: { msg: error.response.data.msg },
-        //     })
-        // }
+            const { company: newCompany, token } = data
+            dispatch({
+                type: LOGIN_COMPANY_SUCCESS,
+                payload: { company: newCompany, token },
+            })
+            addUserToLocalStorage({ company: newCompany, token })
+        } catch (error) {
+            dispatch({
+                type: LOGIN_COMPANY_ERROR,
+                payload: { msg: error.response.data.msg },
+            })
+        }
     }
 
     return (
