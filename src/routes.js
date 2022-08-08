@@ -7,6 +7,7 @@ import UserProfile from "./views/UserProfile/UserProfile.js";
 import TableList from "./views/TableList/TableList.js";
 import DashboardPage from './views/Dashboard/Dashboard'
 import CreateEmployee from "./views/CreateEmployee/CreateEmployee";
+import AllEmployee from "./views/AllEmployee/AllEmployee";
 
 const company = localStorage.getItem('company')
 console.log(company)
@@ -42,6 +43,12 @@ const dashboardRoutes = [
     icon: CreateIcon,
     component: CreateEmployee
   },
+  {
+    path: "/mytask/AllEmployee",
+    name: "All Employee",
+    icon: CreateIcon,
+    component: AllEmployee
+  }
 ];
 
 export default dashboardRoutes;
