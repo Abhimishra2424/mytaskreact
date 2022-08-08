@@ -20,11 +20,15 @@ import CustomInput from "../../components/CustomInput/CustomInput.js";
 import Button from "../../components/CustomButtons/Button.js";
 
 import styles from "../../assets/jss/material-dashboard-react/components/headerLinksStyle.js";
+import { useAppContext } from "../../context/appContext.js";
 
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
+ 
+  const { logoutCompany} = useAppContext();
+
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickNotification = (event) => {
@@ -101,8 +105,9 @@ export default function AdminNavbarLinks() {
                     </MenuItem> */}
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={()=> logoutCompany()}
                       className={classes.dropdownItem}
+                      
                     >
                       Logout
                     </MenuItem>
