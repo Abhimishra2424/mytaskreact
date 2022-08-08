@@ -16,10 +16,10 @@ import styles from "../assets/jss/material-dashboard-react/layouts/adminStyle.js
 
 import bgImage from "../assets/img/sidebar-2.jpg";
 import logo from "../assets/img/reactlogo.png";
+import SubDashboard from "../views/SubDashboard/SubDashboard";
 
 let ps;
 
-console.log("routes ====",routes)
 
 const switchRoutes = (
     <Switch>
@@ -42,24 +42,12 @@ export default function Admin({ ...rest }) {
     const classes = useStyles();
     // ref to help us initialize PerfectScrollbar on windows devices
     const mainPanel = React.createRef();
-    // states and functions
+
     const [image, setImage] = React.useState(bgImage);
     const [color, setColor] = React.useState("blue");
     const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    // const handleImageClick = (image) => {
-    //   setImage(image);
-    // };
-    // const handleColorClick = (color) => {
-    //   setColor(color);
-    // };
-    // const handleFixedClick = () => {
-    //   if (fixedClasses === "dropdown") {
-    //     setFixedClasses("dropdown show");
-    //   } else {
-    //     setFixedClasses("dropdown");
-    //   }
-    // };
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -92,6 +80,7 @@ export default function Admin({ ...rest }) {
 
     return (
         <div className={classes.wrapper}>
+            
             <Sidebar
                 routes={routes}
                 logoText={"Creative Tim"}
@@ -102,6 +91,7 @@ export default function Admin({ ...rest }) {
                 color={color}
                 {...rest}
             />
+   
             <div className={classes.mainPanel} ref={mainPanel}>
                 <Navbar
                     routes={routes}
@@ -111,12 +101,18 @@ export default function Admin({ ...rest }) {
 
                 {getRoute() ? (
                     <div className={classes.content}>
-                        <div className={classes.container}>{switchRoutes}</div>
+                        <div className={classes.container}>{switchRoutes}
+                       
+                        </div>
                     </div>
                 ) : (
-                    <div className={classes.map}>{switchRoutes}</div>
+                    <><div className={classes.map}>{switchRoutes}</div>   <SubDashboard /></>
+                    
                 )}
+                
             </div>
+         
+
         </div>
     );
 }

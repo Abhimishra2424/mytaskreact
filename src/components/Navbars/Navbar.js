@@ -30,16 +30,20 @@ export default function Header(props) {
   });
   
   return (
-    <AppBar className={classes.appBar + appBarClasses}>
+    <AppBar className={classes.appBar + appBarClasses} style={{
+      backgroundColor: "#3d6889",
+    }}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
           <Button color="transparent" href="#" className={classes.title}>
             {/* {routeName} */}
+            
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+          {/* {props.rtlActive ? <RTLNavbarLinks /> : } */}
+          <AdminNavbarLinks />
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton
