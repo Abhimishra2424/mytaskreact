@@ -9,7 +9,7 @@ import {
     LOGIN_COMPANY_BEGIN,
     LOGIN_COMPANY_SUCCESS,
     LOGIN_COMPANY_ERROR,
-    LOGOUT_USER,
+    LOGOUT_COMPANY,
 } from './actions'
 
 const token = localStorage.getItem('token')
@@ -37,8 +37,8 @@ const AppProvider = ({ children }) => {
         localStorage.removeItem('company')
     }
 
-    const logoutUser = () => {
-        dispatch({ type: LOGOUT_USER })
+    const logoutCompany = () => {
+        dispatch({ type: LOGOUT_COMPANY })
         removeUserFromLocalStorage()
     }
 
@@ -90,7 +90,7 @@ const AppProvider = ({ children }) => {
                 ...state,
                 createCompany,
                 loginCompany,
-                logoutUser
+                logoutCompany
             }}
         >
             {children}

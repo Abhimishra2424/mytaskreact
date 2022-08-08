@@ -6,10 +6,10 @@ import {
     LOGIN_COMPANY_BEGIN,
     LOGIN_COMPANY_SUCCESS,
     LOGIN_COMPANY_ERROR,
-
+    LOGOUT_COMPANY
 } from './actions'
 
-// import { initialState } from './appContext'
+import { initialState } from './appContext'
 
 const reducer = (state, action) => {
 
@@ -50,17 +50,13 @@ const reducer = (state, action) => {
             error: action.payload.msg,
         }
     }
-    // if (action.type === LOGOUT_USER) {
-    //     return {
-    //         ...initialState,
-    //         user: null,
-    //         token: null,
-    //         jobLocation: '',
-    //         userLocation: '',
-    //     }
-    // }
-
-
+    if (action.type === LOGOUT_COMPANY) {
+        return {
+            ...initialState,
+            company: null,
+            token: null,
+        }
+    }
     throw new Error(`no such action : ${action.type}`)
 }
 

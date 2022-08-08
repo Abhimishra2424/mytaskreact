@@ -56,7 +56,7 @@ export default function Sidebar(props) {
       })}
     </List>
   );
-  
+
   var brand = (
     <div className={classes.logo}>
       <a
@@ -86,13 +86,17 @@ export default function Sidebar(props) {
               [classes.drawerPaperRTL]: props.rtlActive,
             }),
           }}
+          style={{ backgroundColor: '#fff' }}
           onClose={props.handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
         >
           {brand}
-
+          <div className={classes.sidebarWrapper}>{links}</div>
+          <div
+            className={classes.background}
+          />
         </Drawer>
       </Hidden>
       <Hidden smDown implementation="css">
@@ -110,9 +114,6 @@ export default function Sidebar(props) {
           <div className={classes.sidebarWrapper}>{links}</div>
           <div
             className={classes.background}
-            style={{
-              backgroundColor: "#000000",
-            }}
           />
         </Drawer>
       </Hidden>
