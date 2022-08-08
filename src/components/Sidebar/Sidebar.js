@@ -2,7 +2,7 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -69,7 +69,7 @@ export default function Sidebar(props) {
         <div className={classes.logoImage}>
           {/* Add LOGO Todo */}
         </div>
-        {"Task Manager"}
+        <Link to="/mytask">  {"Task Manager"}</Link>
       </a>
     </div>
   );
@@ -86,7 +86,7 @@ export default function Sidebar(props) {
               [classes.drawerPaperRTL]: props.rtlActive,
             }),
           }}
-          style={{ backgroundColor: '#fff' }}
+          style={{ backgroundColor: "#458FED" }}
           onClose={props.handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.

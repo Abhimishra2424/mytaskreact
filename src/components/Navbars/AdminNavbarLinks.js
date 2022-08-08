@@ -55,7 +55,7 @@ export default function AdminNavbarLinks() {
     <div>
       <div className={classes.manager}>
         <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
+          color={"white"}
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
           aria-owns={openProfile ? "profile-menu-list-grow" : null}
@@ -93,20 +93,14 @@ export default function AdminNavbarLinks() {
                   <MenuList role="menu">
                     <MenuItem
                       onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
+                      // className={classes.dropdownItem}
                     >
                       Profile
                     </MenuItem>
-                    {/* <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem> */}
                     <Divider light />
                     <MenuItem
                       onClick={()=> logoutCompany()}
-                      className={classes.dropdownItem}
+                      // className={classes.dropdownItem}
                       
                     >
                       Logout
