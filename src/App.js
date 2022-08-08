@@ -35,7 +35,7 @@ const App = () => {
             />
           </>
         ) : (
-          <PrivateRoute path="/mytask" exact component={Admin} />
+          <PrivateRoute path="/mytask"  component={Admin} />
         )}
       </>
     </Switch>
