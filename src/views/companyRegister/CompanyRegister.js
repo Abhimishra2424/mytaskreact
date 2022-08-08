@@ -6,6 +6,7 @@ import RealMeLogo from '../../../src/realbooks.png'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAppContext } from "../../context/appContext";
 
 const useStyles = makeStyles({
   button: {
@@ -19,6 +20,9 @@ const useStyles = makeStyles({
 
 const CompanyRegister = () => {
   const classes = useStyles();
+  const { isLoading, createCompany } =
+    useAppContext()
+
   const [companyData, setCompanyData] = useState({
     companyName: "",
     companyEmail: "",
@@ -29,6 +33,10 @@ const CompanyRegister = () => {
     e.preventDefault();
     if (companyData.companyName === "" || companyData.companyEmail === "" || companyData.companyPassword === "") {
       toast.error("Please fill all the fields required");
+    }
+
+    else {
+      createCompany({ company: companyData });
     }
   }
 
@@ -126,6 +134,7 @@ const CompanyRegister = () => {
                       fullWidth
                       type="submit"
                       className={classes.button}
+                      disabled={isLoading}
                     >
                       Create Company
                     </Button>

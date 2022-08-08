@@ -3,19 +3,20 @@ import React, { useReducer, useContext } from 'react'
 import reducer from './reducer'
 import axios from 'axios'
 import {
-    SETUP_USER_BEGIN,
-    SETUP_USER_SUCCESS,
-    SETUP_USER_ERROR,
+    SET_COMPANY_BEGIN,
+    SET_COMPANY_SUCCESS,
+    SET_COMPANY_ERROR,
     LOGOUT_USER,
 } from './actions'
 
 const token = localStorage.getItem('token')
-const user = localStorage.getItem('user')
+const company = localStorage.getItem('company')
 
 const initialState = {
     isLoading: false,
-    user: user ? JSON.parse(user) : null,
-    token: token,
+    company: company ? JSON.parse(company) : null,
+    token: token ? token : null,
+    error: null,
 }
 
 const AppContext = React.createContext()
@@ -23,14 +24,14 @@ const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    const addUserToLocalStorage = ({ user, token }) => {
-        localStorage.setItem('user', JSON.stringify(user))
+    const addUserToLocalStorage = ({ company, token }) => {
+        localStorage.setItem('company', JSON.stringify(company))
         localStorage.setItem('token', token)
     }
 
     const removeUserFromLocalStorage = () => {
         localStorage.removeItem('token')
-        localStorage.removeItem('user')
+        localStorage.removeItem('company')
     }
 
     const logoutUser = () => {
@@ -38,30 +39,31 @@ const AppProvider = ({ children }) => {
         removeUserFromLocalStorage()
     }
 
-    const setupUser = async ({ currentUser }) => {
-        dispatch({ type: SETUP_USER_BEGIN })
-        // try {
-        //     const { data } = await axios.post(`/api/v1/auth/`, currentUser)
+    const createCompany = async ({ company }) => {
+        console.log('createCompany', company)
+        dispatch({ type: SET_COMPANY_BEGIN })
+        try {
+            const { data } = await axios.post(`http://localhost:5000/api/company/register`, company)
 
-        //     const { user, token } = data
-        //     dispatch({
-        //         type: SETUP_USER_SUCCESS,
-        //         payload: { user, token },
-        //     })
-        //     addUserToLocalStorage({ user, token, })
-        // } catch (error) {
-        //     dispatch({
-        //         type: SETUP_USER_ERROR,
-        //         payload: { msg: error.response.data.msg },
-        //     })
-        // }
+            const { company: newCompany, token } = data
+            dispatch({
+                type: SET_COMPANY_SUCCESS,
+                payload: { company: newCompany, token },
+            })
+            addUserToLocalStorage({ company: newCompany, token })
+        } catch (error) {
+            dispatch({
+                type: SET_COMPANY_ERROR,
+                payload: { msg: error.response.data.msg },
+            })
+        }
     }
 
     return (
         <AppContext.Provider
             value={{
                 ...state,
-                setupUser,
+                createCompany,
                 logoutUser
             }}
         >
