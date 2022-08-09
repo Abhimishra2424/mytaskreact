@@ -18,29 +18,43 @@ import Button from "../../components/CustomButtons/Button.js";
 // import { useRouteName } from "../../hooks";
 
 import styles from "../../assets/jss/material-dashboard-react/components/headerStyle.js";
+import { Typography } from "@material-ui/core";
+import { useAppContext } from "../../context/appContext.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
+
+  const { company } = useAppContext();
   const classes = useStyles();
   // const routeName = useRouteName();
   const { color } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color,
   });
-  
+
   return (
-    <AppBar className={classes.appBar + appBarClasses} style={{
-      backgroundColor: "#3d6889",
-    }}>
+    <AppBar
+      className={classes.appBar + appBarClasses}
+      style={{
+        backgroundColor: "#3d6889",
+      }}
+    >
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
-          <Button color="transparent" href="#" className={classes.title}>
-            {/* {routeName} */}
-            
-          </Button>
+
+          <Typography
+            variant="h6"
+            style={{
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            {company.companyName +  " - " + "Solutions Private Limited"}
+          </Typography>
         </div>
+
         <Hidden smDown implementation="css">
           {/* {props.rtlActive ? <RTLNavbarLinks /> : } */}
           <AdminNavbarLinks />
