@@ -47,7 +47,7 @@ const [selectedData, setSelectedData] = useState({})
                 company_id: company.company_id,
             };
             const { data } = await axios.post(
-                "http://localhost:5000/api/company/getAllEmployeeByCompanyId",
+                "http://localhost:5000/api/employee/getAllEmployeeByCompanyId",
                 payload
             );
             console.log(data);

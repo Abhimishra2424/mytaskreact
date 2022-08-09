@@ -50,7 +50,7 @@ const CreateEmployee = () => {
             companyName: company.companyName
         }
 
-        const { data } = await axios.post("http://localhost:5000/api/company/createemployee", payload)
+        const { data } = await axios.post("http://localhost:5000/api/employee/createemployee", payload)
         if (data.msg === "Employee registered") {
             toast.success(data.msg)
             setEmployeeData({
