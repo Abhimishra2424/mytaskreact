@@ -1,112 +1,232 @@
-import React from "react";
-// @material-ui/core components
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-// core components
-import GridItem from "../../components/Grid/GridItem.js";
-import GridContainer from "../../components/Grid/GridContainer.js";
-import Table from "../../components/Table/Table.js";
-import Card from "../../components/Card/Card.js";
-import CardHeader from "../../components/Card/CardHeader.js";
-import CardBody from "../../components/Card/CardBody.js";
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import { useAppContext } from "../../context/appContext";
+import { Button, TextField } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
 
-const styles = {
-  cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0",
-    },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF",
-    },
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1",
-    },
-  },
-};
 
-const useStyles = makeStyles(styles);
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 450,
+  },
+});
+
 
 export default function TableList() {
+  const { getAllEmployeescompanyId, AllEmployees, getAllTaskByCompanyId , AllTasks} = useAppContext();
   const classes = useStyles();
+
+  const [page, setpage] = useState(0);
+  const [rowsPerPage, setrowsPerPage] = useState(5);
+
+  const [open, setOpen] = React.useState(false);
+
+  const [selectedData, setSelectedData] = useState({})
+
+
+  useEffect(() => {
+    getAllEmployeescompanyId()
+    getAllTaskByCompanyId()
+  }, []);
+
+  const handleChangePage = (event, newPage) => {
+    setpage(newPage);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setrowsPerPage(+event.target.value);
+    setpage(0);
+  };
+
+
+  const handleClickOpen = () => {
+    setOpen(true);
+
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleEdit = (e, data) => {
+    console.log(data)
+    setOpen(true);
+    setSelectedData(data)
+  }
+
+
+
   return (
-    <GridContainer>
-      {/* <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"],
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem> */}
-      <GridItem xs={12} sm={12} md={12}>
-        <Card plain>
-          <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>
-              All Task Assigned to you
-            </h4>
-            {/* <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p> */}
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                [
-                  "4",
-                  "Philip Chaney",
-                  "$38,735",
-                  "Korea, South",
-                  "Overland Park",
-                ],
-                [
-                  "5",
-                  "Doris Greene",
-                  "$63,542",
-                  "Malawi",
-                  "Feldkirchen in Kärnten",
-                ],
-                ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"],
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow
+            style={{
+              backgroundColor: "#3D6889",
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+            }}
+          >
+            <TableCell style={{ color: "white"}} align="right">Employee Code</TableCell>
+            <TableCell style={{ color: "white"}} align="right">Task Code</TableCell>
+            <TableCell style={{ color: "white"}} align="right">Status</TableCell>
+            <TableCell style={{ color: "white"}} align="right">Title</TableCell>
+            <TableCell style={{ color: "white"}} align="right">Description</TableCell>
+            <TableCell
+              style={{
+                color: "white",
+              }}
+              align="right"
+            >
+              Employee Name
+            </TableCell>
+            <TableCell
+              style={{
+                color: "white",
+              }}
+              align="right"
+            >
+              Employee Email
+            </TableCell>
+
+       
+            <TableCell
+              style={{
+                color: "white",
+              }}
+              align="right"
+            >
+              Action
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {AllTasks?.length
+            ? AllTasks
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <TableRow key={row.employee_id}>
+                  <TableCell align="right">{row.employeeCode}</TableCell>
+                  <TableCell align="right">{row.taskCode}</TableCell>
+                  <TableCell align="right">{row.status}</TableCell>
+                  <TableCell align="right">{row.title}</TableCell>
+                  <TableCell align="right">{row.description}</TableCell>
+                  <TableCell align="right">{row.employeeName}</TableCell>
+                  <TableCell align="right">{row.employeeEmail}</TableCell>
+
+                  <TableCell align="right">
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      startIcon={<EditIcon />}
+                      onClick={(e) => handleEdit(e, row)}
+                    >
+                      Edit
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            : "no data"}
+        </TableBody>
+      </Table>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={AllEmployees?.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+
+      {/* Edit Modal */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Edit Employee"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <form >
+              <TextField
+                id="outlined-basic"
+                label="Employee Code"
+                variant="outlined"
+                fullWidth
+                value={selectedData.employeeCode}
+                onChange={(e) => setSelectedData({ ...selectedData, employeeCode: e.target.value })}
+                disabled
+
+                margin="normal"
+              />
+
+              <TextField
+                id="outlined-basic"
+                label="Employee Name"
+                variant="outlined"
+                fullWidth
+                value={selectedData.employeeName}
+                onChange={(e) => setSelectedData({ ...selectedData, employeeName: e.target.value })}
+                margin="normal"
+              />
+              <TextField
+                id="outlined-basic"
+                label="Employee Email"
+
+                variant="outlined"
+                fullWidth
+                value={selectedData.employeeEmail}
+                onChange={(e) => setSelectedData({ ...selectedData, employeeEmail: e.target.value })}
+                margin="normal"
+
+              />
+              <TextField
+                id="outlined-basic"
+                label="Employee Password"
+                variant="outlined"
+                fullWidth
+                value={selectedData.employeePassword}
+                onChange={(e) => setSelectedData({ ...selectedData, employeePassword: e.target.value })}
+                margin="normal"
+
+
+              />
+
+              <Button
+                variant="contained"
+                fullWidth
+                type="submit"
+                color='primary'
+              >
+                Update
+              </Button>
+            </form>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </TableContainer>
   );
 }
