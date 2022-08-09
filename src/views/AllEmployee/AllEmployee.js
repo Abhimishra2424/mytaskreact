@@ -8,8 +8,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import { Link } from "react-router-dom";
-import axios from "axios";
 import { useAppContext } from "../../context/appContext";
 import { Button, TextField } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
@@ -20,7 +18,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles({
     table: {
@@ -29,32 +26,20 @@ const useStyles = makeStyles({
 });
 
 const AllEmployee = () => {
-    const { company } = useAppContext();
+    const { getAllEmployeescompanyId , AllEmployees} = useAppContext();
     const classes = useStyles();
 
-    const [data, setdata] = useState([]);
     const [page, setpage] = useState(0);
     const [rowsPerPage, setrowsPerPage] = useState(5);
 
     const [open, setOpen] = React.useState(false);
 
-const [selectedData, setSelectedData] = useState({})
+     const [selectedData, setSelectedData] = useState({})
 
 
     useEffect(() => {
-        const getAllemployee = async () => {
-            let payload = {
-                company_id: company.company_id,
-            };
-            const { data } = await axios.post(
-                "http://localhost:5000/api/employee/getAllEmployeeByCompanyId",
-                payload
-            );
-            console.log(data);
-            setdata(data.employees);
-        };
-        getAllemployee();
-    }, [company.company_id]);
+        getAllEmployeescompanyId()
+    }, []);
 
     const handleChangePage = (event, newPage) => {
         setpage(newPage);
@@ -144,8 +129,8 @@ const [selectedData, setSelectedData] = useState({})
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data?.length
-                        ? data
+                    {AllEmployees?.length
+                        ? AllEmployees
                             ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => (
                                 <TableRow key={row.employee_id}>
@@ -172,7 +157,7 @@ const [selectedData, setSelectedData] = useState({})
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={data?.length}
+                count={AllEmployees?.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
@@ -255,6 +240,7 @@ const [selectedData, setSelectedData] = useState({})
                 </DialogActions>
             </Dialog>
         </TableContainer>
+      
     );
 };
 
