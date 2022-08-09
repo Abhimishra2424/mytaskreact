@@ -5,7 +5,7 @@ import { useAppContext } from '../../context/appContext';
 import { useHistory } from "react-router-dom"
 
 const CompanyLogin = () => {
-  const { isLoading, loginCompany } =
+  const { loginCompany } =
     useAppContext()
     const history = useHistory();
   const [companyLoginData, setCompanyLoginData] = useState({
@@ -67,7 +67,7 @@ const CompanyLogin = () => {
                   size="large"
                   fullWidth
                   type='submit'
-                  disabled={isLoading}
+
                 >Company Login</Button>
               </form>
             </div>
