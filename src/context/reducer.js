@@ -6,7 +6,10 @@ import {
     LOGIN_COMPANY_BEGIN,
     LOGIN_COMPANY_SUCCESS,
     LOGIN_COMPANY_ERROR,
-    LOGOUT_COMPANY
+    LOGOUT_COMPANY,
+    GET_ALL_EMPLOYEES_BEGIN,
+    GET_ALL_EMPLOYEES_SUCCESS,
+    GET_ALL_EMPLOYEES_ERROR
 } from './actions'
 
 import { initialState } from './appContext'
@@ -55,6 +58,23 @@ const reducer = (state, action) => {
             ...initialState,
             company: null,
             token: null,
+        }
+    }
+    if (action.type === GET_ALL_EMPLOYEES_BEGIN) {
+        return { ...state, isLoading: true }
+    }
+    if (action.type === GET_ALL_EMPLOYEES_SUCCESS) {
+        return {
+            ...state,
+            isLoading: true,
+            AllEmployees: action.payload.AllEmployees,
+        }
+    }
+    if (action.type === GET_ALL_EMPLOYEES_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload.msg,
         }
     }
     throw new Error(`no such action : ${action.type}`)
