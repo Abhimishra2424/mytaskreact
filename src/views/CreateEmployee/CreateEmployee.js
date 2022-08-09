@@ -128,7 +128,10 @@ const CreateEmployee = () => {
                                         variant="contained"
                                         fullWidth
                                         type="submit"
-                                        color='primary'
+                                        style={{
+                                            backgroundColor: "#3d6889",
+                                            color: "white",
+                                          }}
                                     >
                                         Add new Employee
                                     </Button>

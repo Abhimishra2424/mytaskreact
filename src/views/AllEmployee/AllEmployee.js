@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 });
 
 const AllEmployee = () => {
-    const { getAllEmployeescompanyId , AllEmployees} = useAppContext();
+    const { getAllEmployeescompanyId , AllEmployees , getAllTaskByCompanyId} = useAppContext();
     const classes = useStyles();
 
     const [page, setpage] = useState(0);
@@ -39,6 +39,7 @@ const AllEmployee = () => {
 
     useEffect(() => {
         getAllEmployeescompanyId()
+        getAllTaskByCompanyId()
     }, []);
 
     const handleChangePage = (event, newPage) => {

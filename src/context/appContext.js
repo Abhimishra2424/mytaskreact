@@ -13,6 +13,9 @@ import {
   GET_ALL_EMPLOYEES_BEGIN,
   GET_ALL_EMPLOYEES_SUCCESS,
   GET_ALL_EMPLOYEES_ERROR,
+  GET_ALL_TASKS_BEGIN,
+  GET_ALL_TASKS_SUCCESS,
+  GET_ALL_TASKS_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -22,6 +25,7 @@ const initialState = {
   isLoading: false,
   company: company ? JSON.parse(company) : null,
   AllEmployees: [],
+  AllTasks: [],
   token: token ? token : null,
   error: null,
 };
@@ -148,6 +152,24 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const getAllTaskByCompanyId = async () => {
+    dispatch({ type: GET_ALL_TASKS_BEGIN });
+
+    try {
+      const { data } = await authFetch.post(`task/getAllTaskByCompanyId`);
+      console.log(data);
+      dispatch({
+        type: GET_ALL_TASKS_SUCCESS,
+        payload: { AllTasks: data },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_ALL_TASKS_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -156,6 +178,7 @@ const AppProvider = ({ children }) => {
         loginCompany,
         logoutCompany,
         getAllEmployeescompanyId,
+        getAllTaskByCompanyId,
       }}
     >
       {children}
