@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const CreateEmployee = () => {
     const { company } = useAppContext();
     const [employeeData, setEmployeeData] = useState({
+        employeeCode: "",
         employeeName: '',
         employeeEmail: '',
         employeePassword: "",
@@ -36,10 +37,11 @@ const CreateEmployee = () => {
 
     const createEmployee = async (e) => {
         e.preventDefault();
-        if(!employeeData.employeeName || !employeeData.employeeEmail || !employeeData.employeePassword || !employeeData.employeeRole){
+        if (!employeeData.employeeName || !employeeData.employeeEmail || !employeeData.employeePassword || !employeeData.employeeRole || !employeeData.employeeCode) {
             return toast.error("Please fill all the fields required");
         }
         let payload = {
+            employeeCode: employeeData.employeeCode,
             employeeName: employeeData.employeeName,
             employeeEmail: employeeData.employeeEmail,
             employeePassword: employeeData.employeePassword,
@@ -52,6 +54,7 @@ const CreateEmployee = () => {
         if (data.msg === "Employee registered") {
             toast.success(data.msg)
             setEmployeeData({
+                employeeCode: "",
                 employeeName: '',
                 employeeEmail: '',
                 employeePassword: "",
@@ -70,6 +73,16 @@ const CreateEmployee = () => {
                         <div className="mb-12 lg:mb-0">
                             <div className="block">
                                 <form onSubmit={createEmployee}>
+                                    <TextField
+                                        id="outlined-basic"
+                                        label="Employee Code"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={employeeData.employeeCode}
+                                        onChange={(e) => setEmployeeData({ ...employeeData, employeeCode: e.target.value })}
+                                        margin="normal"
+                                    />
+
                                     <TextField
                                         id="outlined-basic"
                                         label="Employee Name"
