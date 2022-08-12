@@ -71,7 +71,7 @@ export default function LandingPage() {
                             variant="contained"
                             className={classes.button}
                         >
-                         {company ? <Link to="/company-login">Company Login</Link>  : <Link to="/company-register">Create Company</Link> }   
+                         <Link to="/company-register">Create Company</Link>  
                         </Button>
                     </div>
                 </section>

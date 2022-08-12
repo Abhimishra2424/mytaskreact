@@ -7,6 +7,7 @@ import LandingPage from "./views/LandingPage/LandingPage";
 import CompanyRegister from "./views/companyRegister/CompanyRegister";
 import CompanyLogin from "./views/companyLogin/CompanyLogin";
 import PrivateRoute from "./components/PrivateRoute";
+import EmployeeLogin from "./views/employeeLogin/EmployeeLogin";
 
 const App = () => {
   const { token } = useAppContext();
@@ -31,6 +32,7 @@ const App = () => {
           <>
             <Route path="/" exact component={LandingPage} />
             <Route path="/company-login" exact component={CompanyLogin} />
+            <Route path="/employee-login" exact component={EmployeeLogin} />
             <Route path="/company-register" exact component={CompanyRegister} />
           </>
         ) : (

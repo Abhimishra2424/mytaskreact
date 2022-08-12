@@ -19,14 +19,20 @@ import {
   GET_TASK_BY_SEARCH_BEGIN,
   GET_TASK_BY_SEARCH_SUCCESS,
   GET_TASK_BY_SEARCH_ERROR,
+  LOGIN_EMPLOYEE_BEGIN,
+  LOGIN_EMPLOYEE_SUCCESS,
+  LOGIN_EMPLOYEE_ERROR,
+
 } from "./actions";
 
 const token = localStorage.getItem("token");
 const company = localStorage.getItem("company");
+const employee = localStorage.getItem("employee");
 
 const initialState = {
   isLoading: false,
-  company: company ? JSON.parse(company) : null,
+  company: company ? company : "",
+  employee:  employee ? employee : "",
   AllEmployees: [],
   AllTasks: [],
   token: token ? token : null,
@@ -70,14 +76,16 @@ const AppProvider = ({ children }) => {
   )
 
 
-  const addUserToLocalStorage = ({ company, token }) => {
+  const addUserToLocalStorage = ({ company, token  , employee }) => {
     localStorage.setItem("company", JSON.stringify(company));
+    localStorage.setItem('employee', JSON.stringify(employee));
     localStorage.setItem("token", token);
   };
 
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("company");
+    localStorage.removeItem("employee");
   };
 
   const logoutCompany = () => {
@@ -190,6 +198,31 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const employeeLogin = async ({ employeeEmail, employeePassword }) => {
+    dispatch({ type: LOGIN_EMPLOYEE_BEGIN });
+    try {
+      const { data } = await axios.post(
+        `http://localhost:5000/api/employee/employeeLogin`,
+        {
+          employeeEmail,
+          employeePassword,
+        }
+      );
+
+      const { employee: newEmployee, token } = data;
+      dispatch({
+        type: LOGIN_EMPLOYEE_SUCCESS,
+        payload: { employee: newEmployee, token },
+      });
+      addUserToLocalStorage({ employee: newEmployee, token });
+    } catch (error) {
+      dispatch({
+        type: LOGIN_EMPLOYEE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -200,6 +233,7 @@ const AppProvider = ({ children }) => {
         getAllEmployeescompanyId,
         getAllTaskByCompanyId,
         getTaskSearchParam,
+        employeeLogin,
       }}
     >
       {children}
