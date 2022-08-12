@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         width: 400,
+        background: "azure"
     },
     input: {
         marginLeft: theme.spacing(1),
@@ -31,10 +32,11 @@ export default function CustomizedInputBase() {
     const { getTaskSearchParam } = useAppContext();
 
     const [searchValue, setSearchValue] = useState('');
-
+    
+    
     useEffect(() => {
-        if (searchValue.length > 0) {
-            getTaskSearchParam(searchValue)
+        if (searchValue === "") {
+            getTaskSearchParam("")
         }
     },[searchValue])
 

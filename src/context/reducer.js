@@ -16,7 +16,9 @@ import {
     GET_TASK_BY_SEARCH_BEGIN,
     GET_TASK_BY_SEARCH_SUCCESS,
     GET_TASK_BY_SEARCH_ERROR,
-    
+    LOGIN_EMPLOYEE_BEGIN,
+    LOGIN_EMPLOYEE_SUCCESS,
+    LOGIN_EMPLOYEE_ERROR,
 } from './actions'
 
 import { initialState } from './appContext'
@@ -113,6 +115,25 @@ const reducer = (state, action) => {
         }
     }
     if (action.type === GET_TASK_BY_SEARCH_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload.msg,
+        }
+    }
+    if (action.type === LOGIN_EMPLOYEE_BEGIN) {
+        return { ...state, isLoading: true }
+    }
+    if (action.type === LOGIN_EMPLOYEE_SUCCESS) {
+        return {
+            ...state,
+            isLoading: true,
+            token: action.payload.token,
+            employee: action.payload.employee,
+        }
+    }
+
+    if (action.type === LOGIN_EMPLOYEE_ERROR) {
         return {
             ...state,
             isLoading: false,
