@@ -13,6 +13,10 @@ import {
     GET_ALL_TASKS_BEGIN,
     GET_ALL_TASKS_SUCCESS,
     GET_ALL_TASKS_ERROR,
+    GET_TASK_BY_SEARCH_BEGIN,
+    GET_TASK_BY_SEARCH_SUCCESS,
+    GET_TASK_BY_SEARCH_ERROR,
+    
 } from './actions'
 
 import { initialState } from './appContext'
@@ -97,7 +101,25 @@ const reducer = (state, action) => {
             error: action.payload.msg,
         }
     }
-    
+
+    if (action.type === GET_TASK_BY_SEARCH_BEGIN) {
+        return { ...state, isLoading: true }
+    }
+    if (action.type === GET_TASK_BY_SEARCH_SUCCESS) {
+        return {
+            ...state,
+            isLoading: true,
+            AllTasks: action.payload.AllTasks,
+        }
+    }
+    if (action.type === GET_TASK_BY_SEARCH_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload.msg,
+        }
+    }
+
     throw new Error(`no such action : ${action.type}`)
 }
 

@@ -18,6 +18,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CustomizedInputBase from "../../components/Search/Search";
 
 const useStyles = makeStyles({
   table: {
@@ -70,6 +71,8 @@ export default function TableList() {
 
 
   return (
+    <>
+    <CustomizedInputBase />
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -251,5 +254,6 @@ export default function TableList() {
         </DialogActions>
       </Dialog>
     </TableContainer>
+    </>
   );
 }
