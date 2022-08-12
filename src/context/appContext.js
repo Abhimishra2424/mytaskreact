@@ -16,6 +16,9 @@ import {
   GET_ALL_TASKS_BEGIN,
   GET_ALL_TASKS_SUCCESS,
   GET_ALL_TASKS_ERROR,
+  GET_TASK_BY_SEARCH_BEGIN,
+  GET_TASK_BY_SEARCH_SUCCESS,
+  GET_TASK_BY_SEARCH_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -36,35 +39,35 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
 
-    // axios
-    const authFetch = axios.create({
-        baseURL: 'http://localhost:5000/api/',
-      })
-      // request
-    
-      authFetch.interceptors.request.use(
-        (config) => {
-          config.headers.common['Authorization'] = `Bearer ${state.token}`
-          return config
-        },
-        (error) => {
-          return Promise.reject(error)
-        }
-      )
-      // response
-    
-      authFetch.interceptors.response.use(
-        (response) => {
-          return response
-        },
-        (error) => {
-          // console.log(error.response)
-          if (error.response.status === 401) {
-            logoutCompany()
-          }
-          return Promise.reject(error)
-        }
-      )
+  // axios
+  const authFetch = axios.create({
+    baseURL: 'http://localhost:5000/api/',
+  })
+  // request
+
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers.common['Authorization'] = `Bearer ${state.token}`
+      return config
+    },
+    (error) => {
+      return Promise.reject(error)
+    }
+  )
+  // response
+
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response
+    },
+    (error) => {
+      // console.log(error.response)
+      if (error.response.status === 401) {
+        logoutCompany()
+      }
+      return Promise.reject(error)
+    }
+  )
 
 
   const addUserToLocalStorage = ({ company, token }) => {
@@ -138,7 +141,7 @@ const AppProvider = ({ children }) => {
         company_id: company.company_id,
       };
       const { data } = await authFetch.post(
-        `employee/getAllEmployeeByCompanyId`,payload);
+        `employee/getAllEmployeeByCompanyId`, payload);
 
       dispatch({
         type: GET_ALL_EMPLOYEES_SUCCESS,
@@ -170,6 +173,23 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const getTaskSearchParam = async (searchParam) => {
+    dispatch({ type: GET_TASK_BY_SEARCH_BEGIN });
+
+    try {
+      const { data } = await authFetch.post("task/getTaskSearchParam", { searchParam });
+      dispatch({
+        type: GET_TASK_BY_SEARCH_SUCCESS,
+        payload: { AllTasks: data },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_TASK_BY_SEARCH_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -179,6 +199,7 @@ const AppProvider = ({ children }) => {
         logoutCompany,
         getAllEmployeescompanyId,
         getAllTaskByCompanyId,
+        getTaskSearchParam,
       }}
     >
       {children}

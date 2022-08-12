@@ -18,6 +18,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CustomizedInputBase from "../../components/Search/Search";
 
 const useStyles = makeStyles({
   table: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
 
 
 export default function TableList() {
-  const { getAllEmployeescompanyId, AllEmployees, getAllTaskByCompanyId , AllTasks} = useAppContext();
+  const { getAllEmployeescompanyId, AllEmployees, getAllTaskByCompanyId, AllTasks } = useAppContext();
   const classes = useStyles();
 
   const [page, setpage] = useState(0);
@@ -70,6 +71,8 @@ export default function TableList() {
 
 
   return (
+    <>
+    <CustomizedInputBase />
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -80,11 +83,11 @@ export default function TableList() {
               fontSize: "1.2rem",
             }}
           >
-            <TableCell style={{ color: "white"}} align="right">Employee Code</TableCell>
-            <TableCell style={{ color: "white"}} align="right">Task Code</TableCell>
-            <TableCell style={{ color: "white"}} align="right">Status</TableCell>
-            <TableCell style={{ color: "white"}} align="right">Title</TableCell>
-            <TableCell style={{ color: "white"}} align="right">Description</TableCell>
+            <TableCell style={{ color: "white" }} align="right">Employee Code</TableCell>
+            <TableCell style={{ color: "white" }} align="right">Task Code</TableCell>
+            <TableCell style={{ color: "white" }} align="right">Status</TableCell>
+            <TableCell style={{ color: "white" }} align="right">Title</TableCell>
+            <TableCell style={{ color: "white" }} align="right">Description</TableCell>
             <TableCell
               style={{
                 color: "white",
@@ -102,7 +105,7 @@ export default function TableList() {
               Employee Email
             </TableCell>
 
-       
+
             <TableCell
               style={{
                 color: "white",
@@ -164,57 +167,80 @@ export default function TableList() {
           <DialogContentText id="alert-dialog-description">
             <form >
               <TextField
-                id="outlined-basic"
+                autoFocus
+                margin="dense"
+                id="employeeCode"
                 label="Employee Code"
-                variant="outlined"
+                type="text"
                 fullWidth
                 value={selectedData.employeeCode}
                 onChange={(e) => setSelectedData({ ...selectedData, employeeCode: e.target.value })}
-                disabled
-
-                margin="normal"
               />
-
               <TextField
-                id="outlined-basic"
+                autoFocus
+                margin="dense"
+                id="taskCode"
+                label="Task Code"
+                type="text"
+                fullWidth
+                value={selectedData.taskCode}
+                onChange={(e) => setSelectedData({ ...selectedData, taskCode: e.target.value })}
+              />
+              <TextField
+
+                autoFocus
+                margin="dense"
+                id="status"
+                label="Status"
+                type="text"
+                fullWidth
+                value={selectedData.status}
+                onChange={(e) => setSelectedData({ ...selectedData, status: e.target.value })}
+              />
+              <TextField
+
+                autoFocus
+                margin="dense"
+                id="title"
+                label="Title"
+                type="text"
+                fullWidth
+                value={selectedData.title}
+                onChange={(e) => setSelectedData({ ...selectedData, title: e.target.value })}
+              />
+              <TextField
+
+                autoFocus
+                margin="dense"
+                id="description"
+                label="Description"
+                type="text"
+                fullWidth
+                value={selectedData.description}
+                onChange={(e) => setSelectedData({ ...selectedData, description: e.target.value })}
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="employeeName"
                 label="Employee Name"
-                variant="outlined"
+                type="text"
                 fullWidth
                 value={selectedData.employeeName}
                 onChange={(e) => setSelectedData({ ...selectedData, employeeName: e.target.value })}
-                margin="normal"
               />
               <TextField
-                id="outlined-basic"
+                autoFocus
+                margin="dense"
+                id="employeeEmail"
                 label="Employee Email"
-
-                variant="outlined"
+                type="text"
                 fullWidth
                 value={selectedData.employeeEmail}
                 onChange={(e) => setSelectedData({ ...selectedData, employeeEmail: e.target.value })}
-                margin="normal"
-
-              />
-              <TextField
-                id="outlined-basic"
-                label="Employee Password"
-                variant="outlined"
-                fullWidth
-                value={selectedData.employeePassword}
-                onChange={(e) => setSelectedData({ ...selectedData, employeePassword: e.target.value })}
-                margin="normal"
-
-
               />
 
-              <Button
-                variant="contained"
-                fullWidth
-                type="submit"
-                color='primary'
-              >
-                Update
-              </Button>
+
             </form>
           </DialogContentText>
         </DialogContent>
@@ -228,5 +254,6 @@ export default function TableList() {
         </DialogActions>
       </Dialog>
     </TableContainer>
+    </>
   );
 }
