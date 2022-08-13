@@ -36,19 +36,21 @@ const CreateEmployee = () => {
 
     ]
 
+  
     const createEmployee = async (e) => {
         e.preventDefault();
         if (!employeeData.employeeName || !employeeData.employeeEmail || !employeeData.employeePassword || !employeeData.employeeRole || !employeeData.employeeCode) {
             return toast.error("Please fill all the fields required");
         }
+        const newCompany = JSON.parse(company)
         let payload = {
             employeeCode: employeeData.employeeCode,
             employeeName: employeeData.employeeName,
             employeeEmail: employeeData.employeeEmail,
             employeePassword: employeeData.employeePassword,
             employeeRole: employeeData.employeeRole,
-            company_id: company.company_id,
-            companyName: company.companyName
+            company_id: newCompany?.company_id,
+            companyName: newCompany?.companyName
         }
 
         const { data } = await axios.post("http://localhost:5000/api/employee/createemployee", payload)
