@@ -22,7 +22,9 @@ import {
   LOGIN_EMPLOYEE_BEGIN,
   LOGIN_EMPLOYEE_SUCCESS,
   LOGIN_EMPLOYEE_ERROR,
-
+  GET_TASK_BY_EMPLOYEE_ID_BEGIN,
+  GET_TASK_BY_EMPLOYEE_ID_SUCCESS,
+  GET_TASK_BY_EMPLOYEE_ID_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -34,6 +36,7 @@ const initialState = {
   company: company ? company : "",
   employee:  employee ? employee : "",
   AllEmployees: [],
+  AllassignedTasks: [],
   AllTasks: [],
   token: token ? token : null,
   error: null,
@@ -198,6 +201,24 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const getAllTaskByEmployeeCode = async () => {
+    dispatch({ type: GET_TASK_BY_EMPLOYEE_ID_BEGIN });
+
+    try {
+      const { data } = await authFetch.post(`task/getAllTaskByEmployeeCode`);
+      console.log(data);
+      dispatch({
+        type: GET_TASK_BY_EMPLOYEE_ID_SUCCESS,
+        payload: { AllassignedTasks: data },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_TASK_BY_EMPLOYEE_ID_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  }
+
   const employeeLogin = async ({ employeeEmail, employeePassword }) => {
     dispatch({ type: LOGIN_EMPLOYEE_BEGIN });
     try {
@@ -234,6 +255,7 @@ const AppProvider = ({ children }) => {
         getAllTaskByCompanyId,
         getTaskSearchParam,
         employeeLogin,
+        getAllTaskByEmployeeCode,
       }}
     >
       {children}
