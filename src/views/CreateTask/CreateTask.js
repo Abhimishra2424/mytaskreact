@@ -49,9 +49,9 @@ const CreateTask = () => {
 
   useEffect(() => {
     var decoded = jwt_decode(token);
-    const companyid = decoded.payload.company.company_id
+    const companyid = decoded?.payload?.company?.company_id
     setCompany_id(companyid)
-    const companyname = decoded.payload.company.companyName
+    const companyname = decoded?.payload?.company?.companyName
     setCompanyName(companyname)
   }, [token])
 

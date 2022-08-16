@@ -19,6 +19,9 @@ import {
     LOGIN_EMPLOYEE_BEGIN,
     LOGIN_EMPLOYEE_SUCCESS,
     LOGIN_EMPLOYEE_ERROR,
+    GET_TASK_BY_EMPLOYEE_ID_BEGIN,
+    GET_TASK_BY_EMPLOYEE_ID_SUCCESS,
+    GET_TASK_BY_EMPLOYEE_ID_ERROR,
 } from './actions'
 
 import { initialState } from './appContext'
@@ -140,6 +143,25 @@ const reducer = (state, action) => {
             error: action.payload.msg,
         }
     }
+
+    if (action.type === GET_TASK_BY_EMPLOYEE_ID_BEGIN) {
+        return { ...state, isLoading: true }
+    }
+    if (action.type === GET_TASK_BY_EMPLOYEE_ID_SUCCESS) {
+        return {
+            ...state,
+            isLoading: true,
+            AllassignedTasks: action.payload,
+        }
+    }
+    if (action.type === GET_TASK_BY_EMPLOYEE_ID_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload.msg,
+        }
+    }
+    
 
     throw new Error(`no such action : ${action.type}`)
 }

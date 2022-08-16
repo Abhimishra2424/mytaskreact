@@ -42,12 +42,6 @@ export default function TableList() {
 
   const [selectedData, setSelectedData] = useState({});
 
-  console.log("selectedData", selectedData);
-
-  useEffect(() => {
-    getAllTaskByCompanyId();
-  }, []);
-
   const handleChangePage = (event, newPage) => {
     setpage(newPage);
   };

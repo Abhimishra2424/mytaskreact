@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 });
 
 const AllEmployee = () => {
-    const { getAllEmployeescompanyId , AllEmployees , getAllTaskByCompanyId} = useAppContext();
+    const { getAllEmployeescompanyId , AllEmployees , } = useAppContext();
     const classes = useStyles();
 
     const [page, setpage] = useState(0);
@@ -39,7 +39,6 @@ const AllEmployee = () => {
 
     useEffect(() => {
         getAllEmployeescompanyId()
-        getAllTaskByCompanyId()
     }, []);
 
     const handleChangePage = (event, newPage) => {
@@ -48,12 +47,6 @@ const AllEmployee = () => {
     const handleChangeRowsPerPage = (event) => {
         setrowsPerPage(+event.target.value);
         setpage(0);
-    };
-
-
-    const handleClickOpen = () => {
-        setOpen(true);
-
     };
 
     const handleClose = () => {
@@ -65,8 +58,6 @@ const AllEmployee = () => {
         setOpen(true);
         setSelectedData(data)
     }
-
-
 
     return (
         <TableContainer component={Paper}>
