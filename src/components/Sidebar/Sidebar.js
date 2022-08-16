@@ -13,51 +13,55 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import styles from "../../assets/jss/material-dashboard-react/components/sidebarStyle.js";
 import { useAppContext } from "../../context/appContext.js";
+import { Button, Divider } from "@material-ui/core";
 
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
-  const { company, token } = useAppContext();
+  const { company,  } = useAppContext();
   const classes = useStyles();
   let location = useLocation();
-
 
   function activeRoute(routeName) {
     return location.pathname === routeName;
   }
   const { routes } = props;
 
-  var links = (
-    <List className={classes.list}>
-      {routes.map((prop, key) => {
-        var activePro = " ";
-        var listItemClasses;
+  // var links = (
+  //   <List className={classes.list}>
+  //     {routes.map((prop, key) => {
+  //       var activePro = " ";
+  //       var listItemClasses;
 
-        const whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute(prop.path),
-        });
+  //       const whiteFontClasses = classNames({
+  //         [" " + classes.whiteFont]: activeRoute(prop.path),
+  //       });
 
-        return (
-          <NavLink
-            to={prop.path}
-            className={activePro + classes.item}
-            activeClassName="active"
-            key={key}
-          >
-            <ListItem button className={classes.itemLink + listItemClasses}>
-              <ListItemText
-                primary={props.rtlActive ? prop.rtlName : prop.name}
-                className={classNames(classes.itemText, whiteFontClasses, {
-                  [classes.itemTextRTL]: props.rtlActive,
-                })}
-                disableTypography={true}
-              />
-            </ListItem>
-          </NavLink>
-        );
-      })}
-    </List>
-  );
+  //       return (
+  //         <NavLink
+  //           to={prop.path}
+  //           className={activePro + classes.item}
+  //           activeClassName="active"
+  //           key={key}
+  //         >
+  //           <ListItem
+  //             button
+  //             className={classes.itemLink + listItemClasses}
+  //             divider={true}
+  //           >
+  //             <ListItemText
+  //               primary={props.rtlActive ? prop.rtlName : prop.name}
+  //               className={classNames(classes.itemText, whiteFontClasses, {
+  //                 [classes.itemTextRTL]: props.rtlActive,
+  //               })}
+  //               disableTypography={true}
+  //             />
+  //           </ListItem>
+  //         </NavLink>
+  //       );
+  //     })}
+  //   </List>
+  // );
 
   var brand = (
     <div className={classes.logo}>
@@ -68,10 +72,8 @@ export default function Sidebar(props) {
         })}
       // target="_blank"
       >
-        <div className={classes.logoImage}>
-          {/* Add LOGO Todo */}
-        </div>
-        <Link to="/mytask">  {"Task Manager"}</Link>
+        <div className={classes.logoImage}>{/* Add LOGO Todo */}</div>
+        <Link to="/mytask"> {"Task Manager"}</Link>
       </a>
     </div>
   );
@@ -95,10 +97,52 @@ export default function Sidebar(props) {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
-          <div
-            className={classes.background}
-          />
+          <div className={classes.sidebarWrapper}>
+            <Button style={{ marginTop: "10px"  }} fullWidth
+             
+            >
+              <Link to="/mytask/dashboard"> {"Dashboard"}</Link>
+            </Button>
+            <Divider />
+            <Button
+              size="small"
+              style={{ marginTop: "10px" }}
+              fullWidth>
+              <Link to="/mytask/tasklist"> {"All Task List"}</Link>
+            </Button>
+            <Divider />
+            <Button
+              disabled={company ? true : false}
+
+              style={{ marginTop: "10px" }}
+
+              fullWidth
+            >
+              <Link to="/mytask/employee/tasklist"> {"Assign Task"}</Link>
+            </Button>
+            <Divider />
+            <Button
+              style={{ marginTop: "10px" }}
+              fullWidth
+            >
+              <Link to="/mytask/createTask"> {"Create task"}</Link>
+            </Button>
+            <Divider />
+            <Button
+              style={{ marginTop: "10px" }}
+              fullWidth
+            >
+              <Link to="/mytask/createEmployee"> {"Create Employee"}</Link>
+            </Button>
+            <Divider />
+            <Button
+              style={{ marginTop: "10px" }}
+              fullWidth
+            >
+              <Link to="/mytask/AllEmployee"> {"All Employee"}</Link>
+            </Button>
+          </div>
+          <div className={classes.background} />
         </Drawer>
       </Hidden>
       <Hidden smDown implementation="css">
@@ -113,10 +157,71 @@ export default function Sidebar(props) {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
-          <div
-            className={classes.background}
-          />
+          <div className={classes.sidebarWrapper}>
+            <Button 
+             
+            // style={{ marginTop: "10px" }} 
+            style={{
+              marginTop: "10px",
+              color: "white"   
+            }}
+            fullWidth>
+              <Link to="/mytask/dashboard"> {"Dashboard"}</Link>
+            </Button>
+            <Divider />
+            <Button
+              size="small"
+             style={{
+              marginTop: "10px",
+              color: "white"   
+            }}
+              fullWidth>
+              <Link to="/mytask/tasklist"> {"All Task List"}</Link>
+            </Button>
+            <Divider />
+            <Button
+              disabled={company ? true : false}
+             
+             style={{
+              marginTop: "10px",
+              color: "white"   
+            }}
+              fullWidth
+            >
+              <Link to="/mytask/employee/tasklist"> {"Assign Task"}</Link>
+            </Button>
+            <Divider />
+            <Button
+             style={{
+              marginTop: "10px",
+              color: "white"   
+            }}
+              fullWidth
+            >
+              <Link to="/mytask/createTask"> {"Create task"}</Link>
+            </Button>
+            <Divider />
+            <Button
+             style={{
+              marginTop: "10px",
+              color: "white"   
+            }}
+              fullWidth
+            >
+              <Link to="/mytask/createEmployee"> {"Create Employee"}</Link>
+            </Button>
+            <Divider />
+            <Button
+             style={{
+              marginTop: "10px",
+              color: "white"   
+            }}
+              fullWidth
+            >
+              <Link to="/mytask/AllEmployee"> {"All Employee"}</Link>
+            </Button>
+          </div>
+          <div className={classes.background} />
         </Drawer>
       </Hidden>
     </div>
