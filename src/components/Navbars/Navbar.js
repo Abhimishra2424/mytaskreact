@@ -51,7 +51,6 @@ export default function Header(props) {
               fontWeight: "bold",
             }}
           >
-            {company?.companyName +  " - " + "Solutions Private Limited"}
           </Typography>
         </div>
 

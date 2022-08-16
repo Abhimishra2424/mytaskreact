@@ -1,9 +1,10 @@
 import { Button, Container, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useAppContext } from '../../context/appContext';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,19 +15,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 const CreateTask = () => {
   const classes = useStyles();
-  const { company } = useAppContext();
+  const { company, token } = useAppContext();
   const history = useHistory();
   const [createTaskData, setCreateTaskData] = useState({
     taskCode: '',
     title: '',
     description: '',
     status: '',
-    company_id: company?.company_id,
-    companyName: company?.companyName,
     employeeCode: '',
     employeeName: '',
     employeeEmail: '',
   });
+
+  const [company_id, setCompany_id] = useState(null);
+  const [companyName, setCompanyName] = useState("")
 
   const statusOptions = [
     {
@@ -44,36 +46,46 @@ const CreateTask = () => {
   ]
 
 
-const createTask = async (e) => {
-  e.preventDefault();
-  let payload = {
-    taskCode: createTaskData.taskCode,
-    title: createTaskData.title,
-    description: createTaskData.description,
-    status: createTaskData.status,
-    company_id: createTaskData.company_id,
-    companyName: createTaskData.companyName,
-    employeeCode: createTaskData.employeeCode,
-    employeeName: createTaskData.employeeName,
-    employeeEmail: createTaskData.employeeEmail,
-  }
 
-  const { data } = await axios.post("http://localhost:5000/api/task/createTask", payload)
-  if (data) {
-    setCreateTaskData({
-      taskCode: '',
-      title: '',
-      description: '',
-      status: '',
-      company_id: company?.company_id,
-      companyName: company?.companyName,
-      employeeCode: '',
-      employeeName: '',
-      employeeEmail: '',
-    });
-    history.push('/mytask/tasklist');
+  useEffect(() => {
+    var decoded = jwt_decode(token);
+    const companyid = decoded.payload.company.company_id
+    setCompany_id(companyid)
+    const companyname = decoded.payload.company.companyName
+    setCompanyName(companyname)
+  }, [token])
+
+  const createTask = async (e) => {
+    e.preventDefault();
+
+    let payload = {
+      taskCode: createTaskData.taskCode,
+      title: createTaskData.title,
+      description: createTaskData.description,
+      status: createTaskData.status,
+      company_id: company_id,
+      companyName: companyName,
+      employeeCode: createTaskData.employeeCode,
+      employeeName: createTaskData.employeeName,
+      employeeEmail: createTaskData.employeeEmail,
+    }
+
+    const { data } = await axios.post("http://localhost:5000/api/task/createTask", payload)
+    if (data) {
+      setCreateTaskData({
+        taskCode: '',
+        title: '',
+        description: '',
+        status: '',
+        company_id: company?.company_id,
+        companyName: company?.companyName,
+        employeeCode: '',
+        employeeName: '',
+        employeeEmail: '',
+      });
+      history.push('/mytask/tasklist');
+    }
   }
-}
   return (
     <Grid container>
 
@@ -81,7 +93,7 @@ const createTask = async (e) => {
         <Container maxWidth="md">
           <div className={classes.formWrapper}>
             <form onSubmit={createTask}>
-            <Grid container spacing={2}>
+              <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Typography
                     style={{
@@ -260,8 +272,8 @@ const createTask = async (e) => {
                     Craete a Task
                   </Button>
                 </Grid>
-           
-            </Grid>
+
+              </Grid>
             </form>
           </div>
         </Container>
