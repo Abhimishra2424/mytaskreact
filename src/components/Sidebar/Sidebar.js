@@ -18,7 +18,7 @@ import { Button, Divider } from "@material-ui/core";
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
-  const { company,  } = useAppContext();
+  const { company, iswho } = useAppContext();
   const classes = useStyles();
   let location = useLocation();
 
@@ -131,6 +131,7 @@ export default function Sidebar(props) {
             <Button
               style={{ marginTop: "10px" }}
               fullWidth
+              disabled={iswho === 'employee' ? true : false}
             >
               <Link to="/mytask/createEmployee"> {"Create Employee"}</Link>
             </Button>
@@ -207,6 +208,7 @@ export default function Sidebar(props) {
               color: "white"   
             }}
               fullWidth
+              disabled={iswho === 'employee' ? true : false}
             >
               <Link to="/mytask/createEmployee"> {"Create Employee"}</Link>
             </Button>

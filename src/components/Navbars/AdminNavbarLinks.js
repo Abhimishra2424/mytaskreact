@@ -27,7 +27,7 @@ const useStyles = makeStyles(styles);
 export default function AdminNavbarLinks() {
   const classes = useStyles();
  
-  const { logoutCompany} = useAppContext();
+  const { logoutCompany , } = useAppContext();
 
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);

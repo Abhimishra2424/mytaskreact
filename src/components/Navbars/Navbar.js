@@ -25,7 +25,7 @@ const useStyles = makeStyles(styles);
 
 export default function Header(props) {
 
-  const { company } = useAppContext();
+  const { company , iswho } = useAppContext();
   const classes = useStyles();
   // const routeName = useRouteName();
   const { color } = props;
@@ -51,6 +51,7 @@ export default function Header(props) {
               fontWeight: "bold",
             }}
           >
+            {iswho === "company" ? "Admin" : "Employee"}
           </Typography>
         </div>
 

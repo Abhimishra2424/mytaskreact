@@ -1,4 +1,5 @@
-import React, { useReducer, useContext } from "react";
+import React, { useReducer, useContext, useEffect } from "react";
+import jwt_decode from "jwt-decode";
 
 import reducer from "./reducer";
 import axios from "axios";
@@ -30,6 +31,7 @@ import {
 const token = localStorage.getItem("token");
 const company = localStorage.getItem("company");
 const employee = localStorage.getItem("employee");
+const iswho = localStorage.getItem("iswho");
 
 const initialState = {
   isLoading: false,
@@ -40,13 +42,14 @@ const initialState = {
   AllTasks: [],
   token: token ? token : null,
   error: null,
+  iswho: iswho ? iswho : null,
 };
+
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
 
   // axios
   const authFetch = axios.create({
@@ -79,16 +82,18 @@ const AppProvider = ({ children }) => {
   )
 
 
-  const addUserToLocalStorage = ({ company, token  , employee }) => {
+  const addUserToLocalStorage = ({ company, token  , employee , iswho}) => {
     localStorage.setItem("company", JSON.stringify(company));
     localStorage.setItem('employee', JSON.stringify(employee));
     localStorage.setItem("token", token);
+    localStorage.setItem("iswho", iswho);
   };
 
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("company");
     localStorage.removeItem("employee");
+    localStorage.removeItem("iswho");
   };
 
   const logoutCompany = () => {
@@ -133,9 +138,9 @@ const AppProvider = ({ children }) => {
       const { company: newCompany, token } = data;
       dispatch({
         type: LOGIN_COMPANY_SUCCESS,
-        payload: { company: newCompany, token },
+        payload: { company: newCompany, token , iswho: "company"},
       });
-      addUserToLocalStorage({ company: newCompany, token });
+      addUserToLocalStorage({ company: newCompany, token , iswho: "company"});
     } catch (error) {
       dispatch({
         type: LOGIN_COMPANY_ERROR,
@@ -233,9 +238,9 @@ const AppProvider = ({ children }) => {
       const { employee: newEmployee, token } = data;
       dispatch({
         type: LOGIN_EMPLOYEE_SUCCESS,
-        payload: { employee: newEmployee, token },
+        payload: { employee: newEmployee, token , iswho: "employee"},
       });
-      addUserToLocalStorage({ employee: newEmployee, token });
+      addUserToLocalStorage({ employee: newEmployee, token , iswho: "employee"});
     } catch (error) {
       dispatch({
         type: LOGIN_EMPLOYEE_ERROR,
