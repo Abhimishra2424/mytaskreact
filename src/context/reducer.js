@@ -56,6 +56,7 @@ const reducer = (state, action) => {
             isLoading: true,
             token: action.payload.token,
             company: action.payload.company,
+            iswho: action.payload.iswho,
         }
     }
     if (action.type === LOGIN_COMPANY_ERROR) {
@@ -70,6 +71,7 @@ const reducer = (state, action) => {
             ...initialState,
             company: null,
             token: null,
+            iswho: null,
         }
     }
     if (action.type === GET_ALL_EMPLOYEES_BEGIN) {
@@ -133,6 +135,7 @@ const reducer = (state, action) => {
             isLoading: true,
             token: action.payload.token,
             employee: action.payload.employee,
+            iswho: action.payload.iswho,
         }
     }
 
