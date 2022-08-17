@@ -76,7 +76,7 @@ export default function NavTabs() {
         onChange={handleChange}
         aria-label="nav tabs example"
       >
-        <LinkTab label="summary" href="/drafts" {...a11yProps(0)} />
+        <LinkTab label="History" href="/drafts" {...a11yProps(0)} />
         <LinkTab label="Task" href="/trash" {...a11yProps(1)} />
         <LinkTab label="Comments" href="/spam" {...a11yProps(2)} />
       </Tabs>

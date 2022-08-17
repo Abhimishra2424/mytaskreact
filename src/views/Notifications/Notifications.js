@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
@@ -11,7 +10,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import axios from "axios";
@@ -25,18 +23,12 @@ const useRowStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein, price) {
+function createData(employeeCode, taskCode, employeeName, employeeEmail) {
   return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      { date: "2020-01-05", customerId: "11091700", amount: 3 },
-      { date: "2020-01-02", customerId: "Anonymous", amount: 1 },
-    ],
+    employeeCode,
+    taskCode,
+    employeeName,
+    employeeEmail,
   };
 }
 
@@ -44,17 +36,24 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
-
+  const [dataHistory, setDataHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchHistory = async () => {
-    const response = await axios.get(`/api/history/${row.name}`);
-    console.log(response.data);
-  }
+    setLoading(true);
+    const response = await axios.post(
+      `http://localhost:5000/api/task/getTaskHistoryCompanyId/${row.taskCode}`
+    );
+    setDataHistory(response.data);
+    setLoading(false);
+  };
 
   const handleClick = () => {
+    setLoading(true);
     setOpen(!open);
-    fetchHistory();
-  }
+    fetchHistory()
+    setLoading(false);
+  };
 
   return (
     <React.Fragment>
@@ -69,12 +68,11 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.employeeCode}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell align="right">{row.taskCode}</TableCell>
+        <TableCell align="right">{row.employeeName}</TableCell>
+        <TableCell align="right">{row.employeeEmail}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -86,19 +84,39 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Updated</TableCell>
-                    <TableCell>status</TableCell>
+                    <TableCell
+                      style={{
+                        color: "red",
+                      }}
+                    >
+                      Updated
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: "green",
+                      }}
+                    >
+                      Status
+                    </TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Title</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
+                  {loading ? (
+                    <TableRow>
+                      <TableCell colSpan={2}>Loading...</TableCell>
                     </TableRow>
-                  ))}
+                  ) : (
+                    dataHistory.map((row) => (
+                      <TableRow key={row.id}>
+                        <TableCell component="th" scope="row">{row.updatedAt}</TableCell>
+                        <TableCell>{row.status}</TableCell>
+                        <TableCell>{row.description}</TableCell>
+                        <TableCell>{row.title}</TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               </Table>
             </Box>
@@ -110,17 +128,20 @@ function Row(props) {
 }
 
 export default function Notifications() {
- const {
+  const { getAllTaskByCompanyId, AllTasks } = useAppContext();
 
-    getAllTaskByCompanyId,
-    AllTasks
-  } = useAppContext();
-
-  const rows = AllTasks.map((row) => createData(row.employeeCode , row.taskCode , row.employeeName , row.employeeEmail));
+  const rows = AllTasks.map((row) =>
+    createData(
+      row.employeeCode,
+      row.taskCode,
+      row.employeeName,
+      row.employeeEmail
+    )
+  );
 
   useEffect(() => {
-    getAllTaskByCompanyId()
-  }, [])
+    getAllTaskByCompanyId();
+  }, []);
 
   return (
     <TableContainer>
