@@ -54,7 +54,6 @@ const AllEmployee = () => {
     };
 
     const handleEdit = (e , data) =>{
-        console.log(data)
         setOpen(true);
         setSelectedData(data)
     }

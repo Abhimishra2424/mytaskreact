@@ -37,7 +37,6 @@ const AssignTask = () => {
 
      const [selectedData, setSelectedData] = useState({})
     
-     console.log("AllassignedTasks", AllassignedTasks.AllassignedTasks)
 
     useEffect(() => {
         getAllTaskByEmployeeCode()

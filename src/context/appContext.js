@@ -1,5 +1,4 @@
-import React, { useReducer, useContext, useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import React, { useReducer, useContext } from "react";
 
 import reducer from "./reducer";
 import axios from "axios";
@@ -36,7 +35,7 @@ const iswho = localStorage.getItem("iswho");
 const initialState = {
   isLoading: false,
   company: company ? company : "",
-  employee:  employee ? employee : "",
+  employee: employee ? employee : "",
   AllEmployees: [],
   AllassignedTasks: [],
   AllTasks: [],
@@ -45,7 +44,6 @@ const initialState = {
   iswho: iswho ? iswho : null,
 };
 
-
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
@@ -53,38 +51,35 @@ const AppProvider = ({ children }) => {
 
   // axios
   const authFetch = axios.create({
-    baseURL: 'http://localhost:5000/api/',
-  })
+    baseURL: "http://localhost:5000/api/",
+  });
   // request
 
   authFetch.interceptors.request.use(
     (config) => {
-      config.headers.common['Authorization'] = `Bearer ${state.token}`
-      return config
+      config.headers.common["Authorization"] = `Bearer ${state.token}`;
+      return config;
     },
     (error) => {
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
-  )
-  // response
+  );
 
   authFetch.interceptors.response.use(
     (response) => {
-      return response
+      return response;
     },
     (error) => {
-      // console.log(error.response)
       if (error.response.status === 401) {
-        logoutCompany()
+        logoutCompany();
       }
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
-  )
+  );
 
-
-  const addUserToLocalStorage = ({ company, token  , employee , iswho}) => {
+  const addUserToLocalStorage = ({ company, token, employee, iswho }) => {
     localStorage.setItem("company", JSON.stringify(company));
-    localStorage.setItem('employee', JSON.stringify(employee));
+    localStorage.setItem("employee", JSON.stringify(employee));
     localStorage.setItem("token", token);
     localStorage.setItem("iswho", iswho);
   };
@@ -102,7 +97,6 @@ const AppProvider = ({ children }) => {
   };
 
   const createCompany = async ({ company }) => {
-    console.log("createCompany", company);
     dispatch({ type: SET_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
@@ -138,9 +132,9 @@ const AppProvider = ({ children }) => {
       const { company: newCompany, token } = data;
       dispatch({
         type: LOGIN_COMPANY_SUCCESS,
-        payload: { company: newCompany, token , iswho: "company"},
+        payload: { company: newCompany, token, iswho: "company" },
       });
-      addUserToLocalStorage({ company: newCompany, token , iswho: "company"});
+      addUserToLocalStorage({ company: newCompany, token, iswho: "company" });
     } catch (error) {
       dispatch({
         type: LOGIN_COMPANY_ERROR,
@@ -153,11 +147,9 @@ const AppProvider = ({ children }) => {
     dispatch({ type: GET_ALL_EMPLOYEES_BEGIN });
 
     try {
-      let payload = {
-        company_id: company.company_id,
-      };
       const { data } = await authFetch.post(
-        `employee/getAllEmployeeByCompanyId`, payload);
+        `employee/getAllEmployeeByCompanyId`
+      );
 
       dispatch({
         type: GET_ALL_EMPLOYEES_SUCCESS,
@@ -176,7 +168,6 @@ const AppProvider = ({ children }) => {
 
     try {
       const { data } = await authFetch.post(`task/getAllTaskByCompanyId`);
-      console.log(data);
       dispatch({
         type: GET_ALL_TASKS_SUCCESS,
         payload: { AllTasks: data },
@@ -187,13 +178,15 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-  }
+  };
 
   const getTaskSearchParam = async (searchParam) => {
     dispatch({ type: GET_TASK_BY_SEARCH_BEGIN });
 
     try {
-      const { data } = await authFetch.post("task/getTaskSearchParam", { searchParam });
+      const { data } = await authFetch.post("task/getTaskSearchParam", {
+        searchParam,
+      });
       dispatch({
         type: GET_TASK_BY_SEARCH_SUCCESS,
         payload: { AllTasks: data },
@@ -204,14 +197,13 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-  }
+  };
 
   const getAllTaskByEmployeeCode = async () => {
     dispatch({ type: GET_TASK_BY_EMPLOYEE_ID_BEGIN });
 
     try {
       const { data } = await authFetch.post(`task/getAllTaskByEmployeeCode`);
-      console.log(data);
       dispatch({
         type: GET_TASK_BY_EMPLOYEE_ID_SUCCESS,
         payload: { AllassignedTasks: data },
@@ -222,7 +214,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-  }
+  };
 
   const employeeLogin = async ({ employeeEmail, employeePassword }) => {
     dispatch({ type: LOGIN_EMPLOYEE_BEGIN });
@@ -238,16 +230,20 @@ const AppProvider = ({ children }) => {
       const { employee: newEmployee, token } = data;
       dispatch({
         type: LOGIN_EMPLOYEE_SUCCESS,
-        payload: { employee: newEmployee, token , iswho: "employee"},
+        payload: { employee: newEmployee, token, iswho: "employee" },
       });
-      addUserToLocalStorage({ employee: newEmployee, token , iswho: "employee"});
+      addUserToLocalStorage({
+        employee: newEmployee,
+        token,
+        iswho: "employee",
+      });
     } catch (error) {
       dispatch({
         type: LOGIN_EMPLOYEE_ERROR,
         payload: { msg: error.response.data.msg },
       });
     }
-  }
+  };
 
   return (
     <AppContext.Provider
