@@ -13,43 +13,43 @@ const dashboardRoutes = [
     path: "/mytask/dashboard",
     name: "Dashboard",
     icon: Dashboard,
-    component: DashboardPage,
+    element: <DashboardPage />,
   },
   // {
   //   path: "/mytask/user",
   //   name: "User Profile",
   //   icon: Person,
-  //   component: UserProfile,
+  //   element: UserProfile,
   // },
   {
     path: "/mytask/tasklist",
     name: "All Task List",
     icon: "content_paste",
-    component: TableList,
+    element: <TableList />,
   },
   {
     path: "/mytask/employee/tasklist",
     name: "Assign Task",
     icon: "content_paste",
-    component: AssignTask,
+    element: <AssignTask />,
   },
   {
     path: "/mytask/createTask",
     name: "Create task",
     icon: CreateIcon,
-    component: CreateTask,
+    element: <CreateTask  />,
   },
   {
     path: "/mytask/createEmployee",
     name: "Create Employee",
     icon: CreateIcon,
-    component: CreateEmployee
+    element: <CreateEmployee />
   },
   {
     path: "/mytask/AllEmployee",
     name: "All Employee",
     icon: CreateIcon,
-    component: AllEmployee
+    component: <AllEmployee />
   }
 ];
 

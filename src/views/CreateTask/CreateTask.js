@@ -2,7 +2,7 @@ import { Button, Container, Grid, makeStyles, TextField, Typography } from '@mat
 import React, { useEffect, useState } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useAppContext } from '../../context/appContext';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 const CreateTask = () => {
   const classes = useStyles();
   const { company, token } = useAppContext();
-  const history = useHistory();
+  let navigate = useNavigate();
   const [createTaskData, setCreateTaskData] = useState({
     taskCode: '',
     title: '',
@@ -83,7 +83,7 @@ const CreateTask = () => {
         employeeName: '',
         employeeEmail: '',
       });
-      history.push('/mytask/tasklist');
+      navigate('/mytask/tasklist');
     }
   }
   return (

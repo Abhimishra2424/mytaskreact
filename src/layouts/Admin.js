@@ -1,5 +1,4 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -9,8 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "../components/Navbars/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar.js";
 
-
-import routes from "../routes";
+import routeFile from "../routes";
 
 import styles from "../assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
@@ -19,102 +17,91 @@ import logo from "../assets/img/reactlogo.png";
 import SubDashboard from "../views/SubDashboard/SubDashboard";
 import { useAppContext } from "../context/appContext";
 
+import { Routes, Route } from "react-router-dom";
+
 let ps;
 
-
 const switchRoutes = (
-    <Switch>
-        {routes.map((prop, key) => {
-            return (
-                <Route
-                    path={prop.path}
-                    component={prop.component}
-                    key={key}
-                />
-            );
-        })}
-    </Switch>
+  < >
+    {routeFile.map((prop, key) => {
+      return <Route  path={prop.path} element={prop.element} key={key} />;
+    })}
+  </>
 );
 
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
-    const { company, token } = useAppContext();
-    // styles
-    const classes = useStyles();
-    // ref to help us initialize PerfectScrollbar on windows devices
-    const mainPanel = React.createRef();
+  // styles
+  const classes = useStyles();
+  // ref to help us initialize PerfectScrollbar on windows devices
+  const mainPanel = React.createRef();
 
-    const [image, setImage] = React.useState(bgImage);
-    const [color, setColor] = React.useState("blue");
-    const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [image, setImage] = React.useState(bgImage);
+  const [color, setColor] = React.useState("blue");
+  const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+  const getRoute = () => {
+    return window.location.pathname !== "/mytask";
+  };
+  const resizeFunction = () => {
+    if (window.innerWidth >= 960) {
+      setMobileOpen(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (navigator.platform.indexOf("Win") > -1) {
+      ps = new PerfectScrollbar(mainPanel.current, {
+        suppressScrollX: true,
+        suppressScrollY: false,
+      });
+      document.body.style.overflow = "hidden";
+    }
+    window.addEventListener("resize", resizeFunction);
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      if (navigator.platform.indexOf("Win") > -1) {
+        ps.destroy();
+      }
+      window.removeEventListener("resize", resizeFunction);
     };
-    const getRoute = () => {
-        return window.location.pathname !== "/mytask";
-    };
-    const resizeFunction = () => {
-        if (window.innerWidth >= 960) {
-            setMobileOpen(false);
-        }
-    };
+  }, [mainPanel]);
 
-    React.useEffect(() => {
-        if (navigator.platform.indexOf("Win") > -1) {
-            ps = new PerfectScrollbar(mainPanel.current, {
-                suppressScrollX: true,
-                suppressScrollY: false,
-            });
-            document.body.style.overflow = "hidden";
-        }
-        window.addEventListener("resize", resizeFunction);
-        // Specify how to clean up after this effect:
-        return function cleanup() {
-            if (navigator.platform.indexOf("Win") > -1) {
-                ps.destroy();
-            }
-            window.removeEventListener("resize", resizeFunction);
-        };
-    }, [mainPanel]);
+  return (
+    <div className={classes.wrapper}>
+      <Sidebar
+        routes={routeFile}
+        logoText={"Creative Tim"}
+        logo={logo}
+        image={image}
+        handleDrawerToggle={handleDrawerToggle}
+        open={mobileOpen}
+        color={color}
+        {...rest}
+      />
 
-    return (
-        <div className={classes.wrapper}>
-            
-            <Sidebar
-                routes={routes}
-                logoText={"Creative Tim"}
-                logo={logo}
-                image={image}
-                handleDrawerToggle={handleDrawerToggle}
-                open={mobileOpen}
-                color={color}
-                {...rest}
-            />
-   
-            <div className={classes.mainPanel} ref={mainPanel}>
-                <Navbar
-                    routes={routes}
-                    handleDrawerToggle={handleDrawerToggle}
-                    {...rest}
-                />
+      <div className={classes.mainPanel} ref={mainPanel}>
+        <Navbar
+          routes={routeFile}
+          handleDrawerToggle={handleDrawerToggle}
+          {...rest}
+        />
 
-                {getRoute() ? (
-                    <div className={classes.content}>
-                        <div className={classes.container}>{switchRoutes}
-                       
-                        </div>
-                    </div>
-                ) : (
-                    <><div className={classes.map}>{switchRoutes}</div>   <SubDashboard /></>
-                    
-                )}
-                
-            </div>
-         
-
-        </div>
-    );
+        {getRoute() ? (
+          <div className={classes.content}>
+            <div className={classes.container}>{switchRoutes}</div>
+          </div>
+        ) : (
+          <>
+            <div className={classes.map}>{switchRoutes}</div> <SubDashboard />
+          </>
+        )}
+      </div>
+    </div>
+  );
 }

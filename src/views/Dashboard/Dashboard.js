@@ -9,11 +9,7 @@ export default function Dashboard() {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Typography
-          component="div"
-        // style={{ backgroundColor: "#cfe8fc", height: "100vh" }}
-        >
-
+        <Typography component="div">
           <TabPanel />
         </Typography>
       </Container>

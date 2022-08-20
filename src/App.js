@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useAppContext } from "./context/appContext";
 
 import Admin from "./layouts/Admin";
@@ -11,35 +11,37 @@ import EmployeeLogin from "./views/employeeLogin/EmployeeLogin";
 
 const App = () => {
   const { token } = useAppContext();
-  const history = useHistory();
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
-      history.push("/mytask");
+      navigate("/mytask");
     }
-  }, [history, token])
+  }, [navigate, token]);
 
   useEffect(() => {
     if (!token) {
-      history.push("/");
+      navigate("/");
     }
-  }, [history, token])
+  }, [navigate, token]);
 
   return (
-    <Switch>
+    <Routes>
       <>
         {!token ? (
           <>
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/company-login" exact component={CompanyLogin} />
-            <Route path="/employee-login" exact component={EmployeeLogin} />
-            <Route path="/company-register" exact component={CompanyRegister} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/company-login" element={<CompanyLogin />} />
+            <Route path="/employee-login" element={<EmployeeLogin />} />
+            <Route path="/company-register" element={<CompanyRegister />} />
           </>
         ) : (
-          <PrivateRoute path="/mytask" component={Admin} />
+          <Route element={PrivateRoute}>
+            <Route path="/mytask" index element={<Admin />} />
+          </Route>
         )}
       </>
-    </Switch>
+    </Routes>
   );
 };
 
