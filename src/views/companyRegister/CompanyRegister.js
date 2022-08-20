@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from "../../context/appContext";
 
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   button: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 const CompanyRegister = () => {
   const classes = useStyles();
-  const history = useHistory();
+  let navigate = useNavigate();
   const { isLoading, createCompany } =
     useAppContext()
 
@@ -40,7 +40,7 @@ const CompanyRegister = () => {
     }
     else {
       createCompany({ company: companyData });
-      history.push("/");
+      navigate("/");
     }
 
   }

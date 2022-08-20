@@ -7,7 +7,7 @@ import { useAppContext } from '../../context/appContext';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {useHistory} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -23,7 +23,7 @@ const CreateEmployee = () => {
         companyName: ""
 
     })
-    const history = useHistory()
+    let navigate = useNavigate();
     const EmployeeRole = [
         {
             value: 'employee',
@@ -63,7 +63,7 @@ const CreateEmployee = () => {
                 employeePassword: "",
                 employeeRole: "",
             })
-            history.push("/mytask/AllEmployee")
+            navigate("/mytask/AllEmployee")
         }
     }
 

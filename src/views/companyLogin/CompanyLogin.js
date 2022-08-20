@@ -2,12 +2,12 @@ import { Box, Button, Container, TextField } from '@material-ui/core'
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { useAppContext } from '../../context/appContext';
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const CompanyLogin = () => {
   const { loginCompany } =
     useAppContext()
-    const history = useHistory();
+    let navigate = useNavigate();
   const [companyLoginData, setCompanyLoginData] = useState({
     companyEmail: '',
     companyPassword: ''
@@ -19,7 +19,7 @@ const CompanyLogin = () => {
       toast.error("Please fill all the fields required");
     } else {
       loginCompany({ companyEmail: companyLoginData.companyEmail, companyPassword: companyLoginData.companyPassword })
-      history.push("/mytask");
+      navigate("/mytask");
     }
   }
 
