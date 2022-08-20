@@ -55,7 +55,6 @@ export default function TableList() {
   };
 
   const handleEdit = (e, data) => {
-    console.log(data);
     setOpen(true);
     setSelectedData(data);
   };

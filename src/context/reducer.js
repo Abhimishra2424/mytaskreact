@@ -1,5 +1,4 @@
 import {
-    // LOGOUT_USER,
     SET_COMPANY_BEGIN,
     SET_COMPANY_SUCCESS,
     SET_COMPANY_ERROR,
@@ -165,7 +164,6 @@ const reducer = (state, action) => {
         }
     }
     
-
     throw new Error(`no such action : ${action.type}`)
 }
 

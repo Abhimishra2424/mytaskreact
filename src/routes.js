@@ -1,17 +1,12 @@
 import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
 import CreateIcon from '@material-ui/icons/Create';
 import CreateTask from "./views/CreateTask/CreateTask";
-// core components/views for Admin layout
-import UserProfile from "./views/UserProfile/UserProfile.js";
 import TableList from "./views/TableList/TableList.js";
 import DashboardPage from './views/Dashboard/Dashboard'
 import CreateEmployee from "./views/CreateEmployee/CreateEmployee";
 import AllEmployee from "./views/AllEmployee/AllEmployee";
 import AssignTask from "./views/AssignTask/AssignTask";
 
-const company = localStorage.getItem('company')
-console.log(company)
 
 const dashboardRoutes = [
   {
