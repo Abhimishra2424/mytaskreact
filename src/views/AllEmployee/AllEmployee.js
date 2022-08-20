@@ -12,227 +12,277 @@ import { useAppContext } from "../../context/appContext";
 import { Button, TextField } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import ErrorPage from "../../components/ErrorPage";
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 450,
-    },
+  table: {
+    minWidth: 450,
+  },
 });
 
 const AllEmployee = () => {
-    const { getAllEmployeescompanyId , AllEmployees , } = useAppContext();
-    const classes = useStyles();
+  const { getAllEmployeescompanyId, AllEmployees, error, editEmployee } = useAppContext();
+  const classes = useStyles();
 
-    const [page, setpage] = useState(0);
-    const [rowsPerPage, setrowsPerPage] = useState(5);
+  const [page, setpage] = useState(0);
+  const [rowsPerPage, setrowsPerPage] = useState(5);
 
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-     const [selectedData, setSelectedData] = useState({})
+  const [selectedData, setSelectedData] = useState({});
 
+  useEffect(() => {
+    getAllEmployeescompanyId();
+  }, []);
 
-    useEffect(() => {
-        getAllEmployeescompanyId()
-    }, []);
+  const handleChangePage = (event, newPage) => {
+    setpage(newPage);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setrowsPerPage(+event.target.value);
+    setpage(0);
+  };
 
-    const handleChangePage = (event, newPage) => {
-        setpage(newPage);
-    };
-    const handleChangeRowsPerPage = (event) => {
-        setrowsPerPage(+event.target.value);
-        setpage(0);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const handleEdit = (e, data) => {
+    setOpen(true);
+    setSelectedData(data);
+  };
 
-    const handleEdit = (e , data) =>{
-        setOpen(true);
-        setSelectedData(data)
-    }
+  const handleEditEmployee = (e) => {
+    e.preventDefault();
+    editEmployee(selectedData);
+  }
 
-    return (
+  return (
+    <>
+      {error ? (
+        <ErrorPage error={error}/>
+      ) : (
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow
+                style={{
+                  backgroundColor: "#3D6889",
+                  fontWeight: "bold",
+                  fontSize: "1.2rem",
+                }}
+              >
+                <TableCell
+                  style={{
+                    color: "white",
+                  }}
+                  align="right"
+                >
+                  Employee Code
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: "white",
+                  }}
+                  align="right"
+                >
+                  Employee Name
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: "white",
+                  }}
+                  align="right"
+                >
+                  Employee Email
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: "white",
+                  }}
+                  align="right"
+                >
+                  Employee Password
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: "white",
+                  }}
+                  align="right"
+                >
+                  Employee Role
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: "white",
+                  }}
+                  align="right"
+                >
+                  Action
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {AllEmployees?.length
+                ? AllEmployees?.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  ).map((row) => (
+                    <TableRow key={row.employee_id}>
+                      <TableCell align="right">{row.employeeCode}</TableCell>
+                      <TableCell align="right">{row.employeeName}</TableCell>
+                      <TableCell align="right">{row.employeeEmail}</TableCell>
+                      <TableCell align="right">
+                        {row.employeePassword}
+                      </TableCell>
+                      <TableCell align="right">{row.employeeRole}</TableCell>
+                      <TableCell
+                        align="right"
                         style={{
-                            backgroundColor: "#3D6889",
-                            fontWeight: "bold",
-                            fontSize: "1.2rem",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
-                    >
-                        <TableCell
-                            style={{
-                                color: "white",
-                            }}
-                            align="right"
+                      >
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          startIcon={<EditIcon />}
+                          size="small"
+                          style={{
+                            marginLeft: "5px",
+                            fontSize: "10px",
+                          }}
+                          onClick={(e) => handleEdit(e, row)}
                         >
-                            Employee Code
-                        </TableCell>
-                        <TableCell
-                            style={{
-                                color: "white",
-                            }}
-                            align="right"
+                          Edit Employee
+                        </Button>
+                        <Button
+                          color="secondary"
+                          variant="outlined"
+                          size="small"
+                          style={{
+                            fontSize: "10px",
+                          }}
                         >
-                            Employee Name
-                        </TableCell>
-                        <TableCell
-                            style={{
-                                color: "white",
-                            }}
-                            align="right"
-                        >
-                            Employee Email
-                         </TableCell>
-                         <TableCell
-                            style={{
-                                color: "white",
-                            }}
-                            align="right"
-                        >
-                            Employee Password
-                        </TableCell>
-                        <TableCell
-                            style={{
-                                color: "white",
-                            }}
-                            align="right"
-                        >
-                            Employee Role
-                        </TableCell>
-                        <TableCell
-                            style={{
-                                color: "white",
-                            }}
-                            align="right"
-                        >
-                            Action
-                        </TableCell>
+                          Delete Employee
+                        </Button>
+                      </TableCell>
                     </TableRow>
-                </TableHead>
-                <TableBody>
-                    {AllEmployees?.length
-                        ? AllEmployees
-                            ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => (
-                                <TableRow key={row.employee_id}>
-                                    <TableCell align="right">{row.employeeCode}</TableCell>
-                                    <TableCell align="right">{row.employeeName}</TableCell>
-                                    <TableCell align="right">{row.employeeEmail}</TableCell>
-                                    <TableCell align="right">{row.employeePassword}</TableCell>
-                                    <TableCell align="right">{row.employeeRole}</TableCell>
-                                    <TableCell align="right">
-                                        <Button
-                                            variant="outlined"
-                                            color="primary"
-                                            startIcon={<EditIcon />}
-                                            onClick={(e)=>handleEdit(e, row)}
-                                        >
-                                            Edit
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        : "no data"}
-                </TableBody>
-            </Table>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={AllEmployees?.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
+                  ))
+                : "no data"}
+            </TableBody>
+          </Table>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={AllEmployees?.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
 
-            {/* Edit Modal */}
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">{"Edit Employee"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        <form >
-                            <TextField
-                                id="outlined-basic"
-                                label="Employee Code"
-                                variant="outlined"
-                                fullWidth
-                                value={selectedData.employeeCode}
-                                onChange={(e)=>setSelectedData({...selectedData, employeeCode: e.target.value})}
-                                disabled
+          {/* Edit Modal */}
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Edit Employee"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <form onSubmit={handleEditEmployee}>
+                  <TextField
+                    id="outlined-basic"
+                    label="Employee Code"
+                    variant="outlined"
+                    fullWidth
+                    value={selectedData.employeeCode}
+                    onChange={(e) =>
+                      setSelectedData({
+                        ...selectedData,
+                        employeeCode: e.target.value,
+                      })
+                    }
+                    disabled
+                    margin="normal"
+                  />
 
-                                margin="normal"
-                            />
+                  <TextField
+                    id="outlined-basic"
+                    label="Employee Name"
+                    variant="outlined"
+                    fullWidth
+                    value={selectedData.employeeName}
+                    onChange={(e) =>
+                      setSelectedData({
+                        ...selectedData,
+                        employeeName: e.target.value,
+                      })
+                    }
+                    margin="normal"
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    label="Employee Email"
+                    variant="outlined"
+                    fullWidth
+                    value={selectedData.employeeEmail}
+                    onChange={(e) =>
+                      setSelectedData({
+                        ...selectedData,
+                        employeeEmail: e.target.value,
+                      })
+                    }
+                    margin="normal"
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    label="Employee Password"
+                    variant="outlined"
+                    fullWidth
+                    value={selectedData.employeePassword}
+                    onChange={(e) =>
+                      setSelectedData({
+                        ...selectedData,
+                        employeePassword: e.target.value,
+                      })
+                    }
+                    margin="normal"
+                  />
 
-                            <TextField
-                                id="outlined-basic"
-                                label="Employee Name"
-                                variant="outlined"
-                                fullWidth
-                                value={selectedData.employeeName}
-                                onChange={(e)=>setSelectedData({...selectedData, employeeName: e.target.value})}
-                                margin="normal"
-                            />
-                            <TextField
-                                id="outlined-basic"
-                                label="Employee Email"
-
-                                variant="outlined"
-                                fullWidth
-                                value={selectedData.employeeEmail}
-                                onChange={(e)=>setSelectedData({...selectedData, employeeEmail: e.target.value})}
-                                margin="normal"
-
-                            />
-                            <TextField
-                                id="outlined-basic"
-                                label="Employee Password"
-                                variant="outlined"
-                                fullWidth
-                                value={selectedData.employeePassword}
-                                onChange={(e)=>setSelectedData({...selectedData, employeePassword: e.target.value})}
-                                margin="normal"
-
-
-                            />
-                           
-                            <Button
-                                variant="contained"
-                                fullWidth
-                                type="submit"
-                                color='primary'
-                            >
-                                Update
-                            </Button>
-                        </form>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose} color="primary" autoFocus>
-                        Save
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    type="submit"
+                    color="primary"
+                  >
+                    Update
+                  </Button>
+                </form>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              {/* <Button onClick={handleClose} color="primary" autoFocus>
+                Save
+              </Button> */}
+            </DialogActions>
+          </Dialog>
         </TableContainer>
-      
-    );
+      )}
+    </>
+  );
 };
 
 export default AllEmployee;

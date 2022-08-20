@@ -21,6 +21,9 @@ import {
     GET_TASK_BY_EMPLOYEE_ID_BEGIN,
     GET_TASK_BY_EMPLOYEE_ID_SUCCESS,
     GET_TASK_BY_EMPLOYEE_ID_ERROR,
+    EDIT_EMPLOYEE_BEGIN,
+    EDIT_EMPLOYEE_SUCCESS,
+    EDIT_EMPLOYEE_ERROR,
 } from './actions'
 
 import { initialState } from './appContext'
@@ -157,6 +160,24 @@ const reducer = (state, action) => {
         }
     }
     if (action.type === GET_TASK_BY_EMPLOYEE_ID_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload.msg,
+        }
+    }
+
+    if (action.type === EDIT_EMPLOYEE_BEGIN) {
+        return { ...state, isLoading: true }
+    }
+    if (action.type === EDIT_EMPLOYEE_SUCCESS) {
+        return {
+            ...state,
+            isLoading: true,
+            AllEmployees: action.payload.AllEmployees,
+        }
+    }
+    if (action.type === EDIT_EMPLOYEE_ERROR) {
         return {
             ...state,
             isLoading: false,

@@ -25,6 +25,9 @@ import {
   GET_TASK_BY_EMPLOYEE_ID_BEGIN,
   GET_TASK_BY_EMPLOYEE_ID_SUCCESS,
   GET_TASK_BY_EMPLOYEE_ID_ERROR,
+  EDIT_EMPLOYEE_BEGIN,
+  EDIT_EMPLOYEE_SUCCESS,
+  EDIT_EMPLOYEE_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -156,6 +159,7 @@ const AppProvider = ({ children }) => {
         payload: { AllEmployees: data.employees },
       });
     } catch (error) {
+      console.log(error);
       dispatch({
         type: GET_ALL_EMPLOYEES_ERROR,
         payload: { msg: error.response.data.msg },
@@ -245,6 +249,24 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const editEmployee = async ( employee ) => {
+    dispatch({ type: EDIT_EMPLOYEE_BEGIN });
+    try {
+      const { data } = await authFetch.post(`employee/editEmployee`, {
+        employee,
+      });
+      dispatch({
+        type: EDIT_EMPLOYEE_SUCCESS,
+        payload: { AllEmployees: data },
+      });
+    } catch (error) {
+      dispatch({
+        type: EDIT_EMPLOYEE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -257,6 +279,7 @@ const AppProvider = ({ children }) => {
         getTaskSearchParam,
         employeeLogin,
         getAllTaskByEmployeeCode,
+        editEmployee,
       }}
     >
       {children}
