@@ -1,11 +1,17 @@
-import { Button, Container, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { useAppContext } from '../../context/appContext';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import {
+  Button,
+  Container,
+  Grid,
+  makeStyles,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { useAppContext } from "../../context/appContext";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
-
 
 const useStyles = makeStyles((theme) => ({
   formWrapper: {
@@ -15,45 +21,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 const CreateTask = () => {
   const classes = useStyles();
-  const { company, token } = useAppContext();
+  const { company, token, AllEmployees } = useAppContext();
   const history = useHistory();
   const [createTaskData, setCreateTaskData] = useState({
-    taskCode: '',
-    title: '',
-    description: '',
-    status: '',
-    employeeCode: '',
-    employeeName: '',
-    employeeEmail: '',
+    taskCode: "",
+    title: "",
+    description: "",
+    status: "",
+    employeeCode: "",
+    employeeName: "",
+    employeeEmail: "",
   });
 
   const [company_id, setCompany_id] = useState(null);
-  const [companyName, setCompanyName] = useState("")
+  const [companyName, setCompanyName] = useState("");
+  const [employeeName, setEmployeeName] = useState("");
+  const [employeeEmail, setEmployeeEmail] = useState("");
+  const [employeeCode, setEmployeeCode] = useState("");
 
   const statusOptions = [
     {
-      value: 'open',
-      label: 'open',
+      value: "open",
+      label: "open",
     },
     {
-      value: 'in progress',
-      label: 'in progress',
+      value: "in progress",
+      label: "in progress",
     },
     {
-      value: 'done',
-      label: 'done',
+      value: "done",
+      label: "done",
     },
-  ]
-
-
+  ];
 
   useEffect(() => {
     var decoded = jwt_decode(token);
-    const companyid = decoded?.payload?.company?.company_id
-    setCompany_id(companyid)
-    const companyname = decoded?.payload?.company?.companyName
-    setCompanyName(companyname)
-  }, [token])
+    const companyid = decoded?.payload?.company?.company_id;
+    setCompany_id(companyid);
+    const companyname = decoded?.payload?.company?.companyName;
+    setCompanyName(companyname);
+  }, [token]);
 
   const createTask = async (e) => {
     e.preventDefault();
@@ -62,36 +69,101 @@ const CreateTask = () => {
       taskCode: createTaskData.taskCode,
       title: createTaskData.title,
       description: createTaskData.description,
-      status: createTaskData.status,
+      status: createTaskData.status.value,
       company_id: company_id,
       companyName: companyName,
       employeeCode: createTaskData.employeeCode,
-      employeeName: createTaskData.employeeName,
+      employeeName: createTaskData.employeeName.value,
       employeeEmail: createTaskData.employeeEmail,
-    }
-    if(!payload.taskCode || !payload.title || !payload.description || !payload.status || !payload.company_id || !payload.companyName || !payload.employeeCode || !payload.employeeName || !payload.employeeEmail){
-      return alert("Please fill all fields")
-    }else{
-      const { data } = await axios.post("http://localhost:5000/api/task/createTask", payload)
+    };
+    console.log(payload);
+    if (
+      !payload.taskCode ||
+      !payload.title ||
+      !payload.description ||
+      !payload.status ||
+      !payload.company_id ||
+      !payload.companyName ||
+      !payload.employeeCode ||
+      !payload.employeeName ||
+      !payload.employeeEmail
+    ) {
+      return alert("Please fill all fields");
+    } else {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/task/createTask",
+        payload
+      );
       if (data) {
         setCreateTaskData({
-          taskCode: '',
-          title: '',
-          description: '',
-          status: '',
+          taskCode: "",
+          title: "",
+          description: "",
+          status: "",
           company_id: company?.company_id,
           companyName: company?.companyName,
-          employeeCode: '',
-          employeeName: '',
-          employeeEmail: '',
+          employeeCode: "",
+          employeeName: "",
+          employeeEmail: "",
         });
-        history.push('/mytask/tasklist');
+        history.push("/mytask/tasklist");
       }
     }
+  };
+
+  let employeeCodeOptions = [];
+  let employeeNameOptions = [];
+  let employeeEmailOptions = [];
+  if (AllEmployees) {
+    AllEmployees?.map((i) => {
+      return employeeCodeOptions.push({
+        value: i.employeeCode,
+        label: i.employeeCode,
+      });
+    });
   }
+  if (AllEmployees) {
+    AllEmployees?.map((i) => {
+      return employeeNameOptions.push({
+        value: i.employeeName,
+        label: i.employeeName,
+      });
+    });
+  }
+  if (AllEmployees) {
+    AllEmployees?.map((i) => {
+      return employeeEmailOptions.push({
+        value: i.employeeEmail,
+        label: i.employeeEmail,
+      });
+    });
+  }
+
+  useEffect(() => {
+    if (createTaskData.employeeName) {
+      const getEmpCodeNameByCode = AllEmployees.find(
+        (i) => i.employeeName === createTaskData.employeeName.value
+      );
+      setCreateTaskData({
+        ...createTaskData,
+        employeeCode: getEmpCodeNameByCode.employeeCode,
+        employeeEmail: getEmpCodeNameByCode.employeeEmail,
+      });
+      setEmployeeEmail(getEmpCodeNameByCode.employeeEmail);
+      setEmployeeCode(getEmpCodeNameByCode.employeeCode);
+    } else {
+      setCreateTaskData({
+        ...createTaskData,
+        employeeCode: "",
+        employeeEmail: "",
+      });
+      setEmployeeEmail("");
+      setEmployeeCode("");
+    }
+  }, [createTaskData.employeeName]);
+
   return (
     <Grid container>
-
       <Grid item xs={12}>
         <Container maxWidth="md">
           <div className={classes.formWrapper}>
@@ -120,8 +192,7 @@ const CreateTask = () => {
                         ...createTaskData,
                         taskCode: e.target.value,
                       });
-                    }
-                    }
+                    }}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -135,8 +206,7 @@ const CreateTask = () => {
                         ...createTaskData,
                         title: e.target.value,
                       });
-                    }
-                    }
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -152,114 +222,112 @@ const CreateTask = () => {
                         ...createTaskData,
                         description: e.target.value,
                       });
-                    }
-                    }
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  {/* <TextField
-                  id="status"
-                  label="Status"
-                  fullWidth
-                  variant="outlined"
-                  onChange={(e) => {
-                    setCreateTaskData({
-                      ...createTaskData,
-                      status: e.target.value,
-                    });
-                  }
-                  }
-                /> */}
                   <Autocomplete
                     id="status"
                     options={statusOptions}
                     getOptionLabel={(option) => option.label}
+                    clearText
                     fullWidth
-                    renderInput={(params) => <TextField {...params} label="Status" variant="outlined" />}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Status"
+                        variant="outlined"
+                      />
+                    )}
                     onChange={(e, value) => {
                       setCreateTaskData({
                         ...createTaskData,
-                        status: value.value,
+                        status: value,
                       });
-                    }
-                    }
+                    }}
                   />
                 </Grid>
-                {/* <Grid item xs={12}>
-                <TextField
-                  name="math"
-                  id="company_id"
-                  label="Company Id"
-                  fullWidth
-                  variant="outlined"
-                  onChange={(e) => {
-                    setCreateTaskData({
-                      ...createTaskData,
-                      company_id: e.target.value,
-                    });
-                  }
-                  }
-                />
-              </Grid> */}
-                {/* <Grid item xs={12}>
-                <TextField
-                  id="companyName"
-                  label="Company Name"
-                  fullWidth
-                  variant="outlined"
-                  onChange={(e) => {
-                    setCreateTaskData({
-                      ...createTaskData,
-                      companyName: e.target.value,
-                    });
-                  }
-                  }
-                />
-              </Grid> */}
                 <Grid item xs={12}>
-                  <TextField
-                    id="employeeCode"
-                    label="Employee Code"
-                    fullWidth
-                    variant="outlined"
-                    onChange={(e) => {
-                      setCreateTaskData({
-                        ...createTaskData,
-                        employeeCode: e.target.value,
-                      });
-                    }
-                    }
-
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
+                  <Autocomplete
                     id="employeeName"
-                    label="Employee Name"
+                    options={employeeNameOptions}
+                    getOptionLabel={(option) => option.label}
+                    value={
+                      employeeName
+                        ? { value: employeeName, label: employeeName }
+                        : createTaskData.employeeName
+                    }
+                    clearText
                     fullWidth
-                    variant="outlined"
-                    onChange={(e) => {
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Employee Name"
+                        variant="outlined"
+                      />
+                    )}
+                    onChange={(e, value) => {
                       setCreateTaskData({
                         ...createTaskData,
-                        employeeName: e.target.value,
+                        employeeName: value,
                       });
-                    }
-                    }
+                    }}
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <TextField
-                    id="employeeEmail"
-                    label="Employee Email"
+                  <Autocomplete
+                    id="employeeCode"
+                    options={employeeCodeOptions}
+                    getOptionLabel={(option) => option.label}
+                    value={
+                      employeeCode
+                        ? { value: employeeCode, label: employeeCode }
+                        : createTaskData.employeeCode
+                    }
+                    disabled
+                    clearText
                     fullWidth
-                    variant="outlined"
-                    onChange={(e) => {
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Employee Code"
+                        variant="outlined"
+                      />
+                    )}
+                    onChange={(e, value) => {
                       setCreateTaskData({
                         ...createTaskData,
-                        employeeEmail: e.target.value,
+                        employeeCode: value,
                       });
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Autocomplete
+                    id="employeeEmail"
+                    options={employeeEmailOptions}
+                    getOptionLabel={(option) => option.label}
+                    value={
+                      employeeEmail
+                        ? { value: employeeEmail, label: employeeEmail }
+                        : createTaskData.employeeEmail
                     }
-                    }
+                    disabled
+                    fullWidth
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Employee Email"
+                        variant="outlined"
+                      />
+                    )}
+                    onChange={(e, value) => {
+                      setCreateTaskData({
+                        ...createTaskData,
+                        employeeEmail: value,
+                      });
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -275,14 +343,13 @@ const CreateTask = () => {
                     Craete a Task
                   </Button>
                 </Grid>
-
               </Grid>
             </form>
           </div>
         </Container>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default CreateTask
+export default CreateTask;
