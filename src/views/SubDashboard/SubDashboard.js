@@ -4,10 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Deposits from './Deposits';
 import Orders from './Orders';
 import TotalEmployee from './TotalEmployee';
 import TotalTask from './TotalTask';
+import Closetask from './Closetask';
+import DoneTask from './DoneTask';
 
 const drawerWidth = 240;
 
@@ -102,27 +103,27 @@ export default function SubDashboard() {
         <Container maxWidth="lg" className={classes.container}>
             <Grid container spacing={3}>
                 {/* Chart */}
-                <Grid item xs={12} md={4} lg={6}>
+                <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
                         <TotalEmployee />
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={4} lg={6}>
+                <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
                         <TotalTask />
                     </Paper>
                 </Grid>
-                {/* <Grid item xs={12} md={4} lg={3}>
+                <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
-                        <Deposits />
+                        <DoneTask />
                     </Paper>
                 </Grid>
 
                 <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
-                        <Deposits />
+                        <Closetask />
                     </Paper>
-                </Grid> */}
+                </Grid> 
 
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
