@@ -6,13 +6,13 @@ import { BrowserRouter } from "react-router-dom";
 
 import { AppProvider } from "./context/appContext";
 
-import 'tw-elements';
+import "tw-elements";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <AppProvider>
+  <AppProvider>
+    <BrowserRouter>
       <App />
-    </AppProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </AppProvider>
 );
