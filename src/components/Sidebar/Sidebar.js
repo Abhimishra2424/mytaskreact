@@ -7,9 +7,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+
 
 import styles from "../../assets/jss/material-dashboard-react/components/sidebarStyle.js";
 import { useAppContext } from "../../context/appContext.js";
@@ -27,42 +25,6 @@ export default function Sidebar(props) {
   }
   const { routes } = props;
 
-  // var links = (
-  //   <List className={classes.list}>
-  //     {routes.map((prop, key) => {
-  //       var activePro = " ";
-  //       var listItemClasses;
-
-  //       const whiteFontClasses = classNames({
-  //         [" " + classes.whiteFont]: activeRoute(prop.path),
-  //       });
-
-  //       return (
-  //         <NavLink
-  //           to={prop.path}
-  //           className={activePro + classes.item}
-  //           activeClassName="active"
-  //           key={key}
-  //         >
-  //           <ListItem
-  //             button
-  //             className={classes.itemLink + listItemClasses}
-  //             divider={true}
-  //           >
-  //             <ListItemText
-  //               primary={props.rtlActive ? prop.rtlName : prop.name}
-  //               className={classNames(classes.itemText, whiteFontClasses, {
-  //                 [classes.itemTextRTL]: props.rtlActive,
-  //               })}
-  //               disableTypography={true}
-  //             />
-  //           </ListItem>
-  //         </NavLink>
-  //       );
-  //     })}
-  //   </List>
-  // );
-
   var brand = (
     <div className={classes.logo}>
       <a
@@ -70,7 +32,7 @@ export default function Sidebar(props) {
         className={classNames(classes.logoLink, {
           [classes.logoLinkRTL]: props.rtlActive,
         })}
-      // target="_blank"
+        // target="_blank"
       >
         <div className={classes.logoImage}>{/* Add LOGO Todo */}</div>
         <Link to="/mytask"> {"Task Manager"}</Link>
@@ -98,50 +60,89 @@ export default function Sidebar(props) {
         >
           {brand}
           <div className={classes.sidebarWrapper}>
-            <Button style={{ marginTop: "10px"  }} fullWidth
-             
+            <Button
+              // style={{ marginTop: "10px" }}
+              style={{
+                marginTop: "10px",
+                color: "white",
+              }}
+              fullWidth
             >
               <Link to="/mytask/dashboard"> {"Dashboard"}</Link>
             </Button>
             <Divider />
             <Button
               size="small"
-              style={{ marginTop: "10px" }}
-              fullWidth>
+              style={{
+                marginTop: "10px",
+                color: "white",
+              }}
+              fullWidth
+            >
               <Link to="/mytask/tasklist"> {"All Task List"}</Link>
             </Button>
             <Divider />
-            <Button
-              disabled={company ? true : false}
+            {iswho === "company" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+                disabled={iswho === "company" ? true : false}
+              >
+                <Link to="/mytask/employee/tasklist"> {"Assign Task"}</Link>
+              </Button>
+            )}
 
-              style={{ marginTop: "10px" }}
+            <Divider />
+            {iswho === "employee" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+                disabled={iswho === "employee" ? true : false}
+              >
+                <Link to="/mytask/createTask"> {"Create task"}</Link>
+              </Button>
+            )}
 
-              fullWidth
-            >
-              <Link to="/mytask/employee/tasklist"> {"Assign Task"}</Link>
-            </Button>
             <Divider />
-            <Button
-              style={{ marginTop: "10px" }}
-              fullWidth
-            >
-              <Link to="/mytask/createTask"> {"Create task"}</Link>
-            </Button>
+            {iswho === "employee" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+                disabled={iswho === "employee" ? true : false}
+              >
+                <Link to="/mytask/createEmployee"> {"Create Employee"}</Link>
+              </Button>
+            )}
+
             <Divider />
-            <Button
-              style={{ marginTop: "10px" }}
-              fullWidth
-              disabled={iswho === 'employee' ? true : false}
-            >
-              <Link to="/mytask/createEmployee"> {"Create Employee"}</Link>
-            </Button>
-            <Divider />
-            <Button
-              style={{ marginTop: "10px" }}
-              fullWidth
-            >
-              <Link to="/mytask/AllEmployee"> {"All Employee"}</Link>
-            </Button>
+            {iswho === "employee" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+              >
+                <Link to="/mytask/AllEmployee"> {"All Employee"}</Link>
+              </Button>
+            )}
           </div>
           <div className={classes.background} />
         </Drawer>
@@ -159,69 +160,87 @@ export default function Sidebar(props) {
         >
           {brand}
           <div className={classes.sidebarWrapper}>
-            <Button 
-             
-            // style={{ marginTop: "10px" }} 
-            style={{
-              marginTop: "10px",
-              color: "white"   
-            }}
-            fullWidth>
+            <Button
+              // style={{ marginTop: "10px" }}
+              style={{
+                marginTop: "10px",
+                color: "white",
+              }}
+              fullWidth
+            >
               <Link to="/mytask/dashboard"> {"Dashboard"}</Link>
             </Button>
             <Divider />
             <Button
               size="small"
-             style={{
-              marginTop: "10px",
-              color: "white"   
-            }}
-              fullWidth>
+              style={{
+                marginTop: "10px",
+                color: "white",
+              }}
+              fullWidth
+            >
               <Link to="/mytask/tasklist"> {"All Task List"}</Link>
             </Button>
             <Divider />
-            <Button
-              disabled={company ? true : false}
-             
-             style={{
-              marginTop: "10px",
-              color: "white"   
-            }}
-              fullWidth
-            >
-              <Link to="/mytask/employee/tasklist"> {"Assign Task"}</Link>
-            </Button>
+            {iswho === "company" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+                disabled={iswho === "company" ? true : false}
+              >
+                <Link to="/mytask/employee/tasklist"> {"Assign Task"}</Link>
+              </Button>
+            )}
+            {iswho === "employee" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+                disabled={iswho === "employee" ? true : false}
+              >
+                <Link to="/mytask/createTask"> {"Create task"}</Link>
+              </Button>
+            )}
+
             <Divider />
-            <Button
-             style={{
-              marginTop: "10px",
-              color: "white"   
-            }}
-              fullWidth
-            >
-              <Link to="/mytask/createTask"> {"Create task"}</Link>
-            </Button>
+            {iswho === "employee" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+                disabled={iswho === "employee" ? true : false}
+              >
+                <Link to="/mytask/createEmployee"> {"Create Employee"}</Link>
+              </Button>
+            )}
+
             <Divider />
-            <Button
-             style={{
-              marginTop: "10px",
-              color: "white"   
-            }}
-              fullWidth
-              disabled={iswho === 'employee' ? true : false}
-            >
-              <Link to="/mytask/createEmployee"> {"Create Employee"}</Link>
-            </Button>
-            <Divider />
-            <Button
-             style={{
-              marginTop: "10px",
-              color: "white"   
-            }}
-              fullWidth
-            >
-              <Link to="/mytask/AllEmployee"> {"All Employee"}</Link>
-            </Button>
+            {iswho === "employee" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+              >
+                <Link to="/mytask/AllEmployee"> {"All Employee"}</Link>
+              </Button>
+            )}
           </div>
           <div className={classes.background} />
         </Drawer>
