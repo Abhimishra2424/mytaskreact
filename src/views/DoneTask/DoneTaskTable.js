@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 });
 
 const DoneTaskTable = () => {
-  const { AllTasks } = useAppContext();
+  const { AllTasks  , iswho} = useAppContext();
   const classes = useStyles();
 
   const [page, setpage] = useState(0);
@@ -108,14 +108,15 @@ const DoneTaskTable = () => {
                       <TableCell align="right">{row.title}</TableCell>
 
                       <TableCell align="right">
-                        <Button
+                        {iswho === "employee" ? "You Are Not Admin": <Button
                           variant="outlined"
                           color="primary"
                           startIcon={<CloseIcon />}
                           onClick={(e) => handleEdit(e, row)}
                         >
                           Close
-                        </Button>
+                        </Button>}
+                        
                       </TableCell>
                     </TableRow>
                   ))
