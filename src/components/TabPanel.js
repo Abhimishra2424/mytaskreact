@@ -7,6 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Notifications from '../views/Notifications/Notifications';
+import DoneTaskTable from "../views/DoneTask/DoneTaskTable";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -77,15 +78,15 @@ export default function NavTabs() {
         aria-label="nav tabs example"
       >
         <LinkTab label="History" href="/drafts" {...a11yProps(0)} />
-        <LinkTab label="Task" href="/trash" {...a11yProps(1)} />
-        <LinkTab label="Comments" href="/spam" {...a11yProps(2)} />
+        <LinkTab label="All Done Task" href="/trash" {...a11yProps(1)} />
+        <LinkTab label="All Close Task" href="/spam" {...a11yProps(2)} />
       </Tabs>
 
       <TabPanel value={value} index={0}>
         <Notifications />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Page Two
+      <DoneTaskTable />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Page Three
