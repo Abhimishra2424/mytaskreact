@@ -12,7 +12,8 @@ const useStyles = makeStyles({
         background: '#304ED8',
         color: '#fff',
         '&:hover': {
-            background: '#3D5AFE',
+            background: '#304ED8',
+            color:"black",
         },
     }
 });
@@ -41,7 +42,6 @@ export default function LandingPage() {
                             <div className="flex items-center lg:ml-auto ">
                                 <Button
                                     type="button"
-                                    className={classes.button}
                                     variant="contained"
                                     color="primary"
                                     size="small"
@@ -49,16 +49,23 @@ export default function LandingPage() {
                                         marginRight: '10px',
                                      }}
                                     startIcon={<LockOpenIcon />}
-                                ><Link to="/company-login">Company Login</Link></Button>
+                                ><Link  
+                                 style={{
+                                    color: 'white',
+                                 }}
+                                to="/company-login">Company Login</Link></Button>
 
                                  <Button
                                     type="button"
-                                    className={classes.button}
                                     variant="contained"
                                     color="primary"
                                     size="small"
                                     startIcon={<LockOpenIcon />}
-                                ><Link to="/employee-login">Employee Login</Link></Button>
+                                ><Link  
+                                style={{
+                                    color: 'white',
+                                 }}
+                                to="/employee-login">Employee Login</Link></Button>
                                
                             </div>
                             
@@ -69,9 +76,13 @@ export default function LandingPage() {
                         <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12"> Adansa <br /><span className="text-blue-600"> Adansa Task Management System . </span></h1>
                         <Button
                             variant="contained"
-                            className={classes.button}
+                            color="primary"
                         >
-                         <Link to="/company-register">Create Company</Link>  
+                         <Link  
+                             style={{
+                                color: 'white',
+                             }}
+                         to="/company-register">Create Company</Link>  
                         </Button>
                     </div>
                 </section>
