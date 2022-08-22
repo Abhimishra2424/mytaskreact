@@ -18,7 +18,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import ErrorPage from "../../components/ErrorPage";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const useStyles = makeStyles({
   table: {
@@ -27,7 +29,8 @@ const useStyles = makeStyles({
 });
 
 const AllEmployee = () => {
-  const { getAllEmployeescompanyId, AllEmployees, error, editEmployee } = useAppContext();
+  const { getAllEmployeescompanyId, AllEmployees, error, editEmployee } =
+    useAppContext();
   const classes = useStyles();
 
   const [page, setpage] = useState(0);
@@ -62,12 +65,27 @@ const AllEmployee = () => {
     e.preventDefault();
     editEmployee(selectedData);
     setOpen(false);
-  }
+    toast.success("Employee Edited Successfully");
+  };
+
+  const handleDelete = async (e, data) => {
+    e.preventDefault();
+    const employee_id = data.employee_id;
+    if (window.confirm("Are you sure you want to delete this employee?")) {
+      const { data } = await axios.post(
+        `http://localhost:5000/api/employee/deleteEmployee`,
+        { employee_id }
+      );
+      toast.success(`${data.msg}`);
+      getAllEmployeescompanyId();
+    }
+  };
 
   return (
     <>
+      <ToastContainer />
       {error ? (
-        <ErrorPage error={error}/>
+        <ErrorPage error={error} />
       ) : (
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -171,6 +189,7 @@ const AllEmployee = () => {
                           style={{
                             fontSize: "10px",
                           }}
+                          onClick={(e) => handleDelete(e, row)}
                         >
                           Delete Employee
                         </Button>
