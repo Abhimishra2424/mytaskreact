@@ -69,21 +69,24 @@ const CreateTask = () => {
       employeeName: createTaskData.employeeName,
       employeeEmail: createTaskData.employeeEmail,
     }
-
-    const { data } = await axios.post("http://localhost:5000/api/task/createTask", payload)
-    if (data) {
-      setCreateTaskData({
-        taskCode: '',
-        title: '',
-        description: '',
-        status: '',
-        company_id: company?.company_id,
-        companyName: company?.companyName,
-        employeeCode: '',
-        employeeName: '',
-        employeeEmail: '',
-      });
-      history.push('/mytask/tasklist');
+    if(!payload.taskCode || !payload.title || !payload.description || !payload.status || !payload.company_id || !payload.companyName || !payload.employeeCode || !payload.employeeName || !payload.employeeEmail){
+      return alert("Please fill all fields")
+    }else{
+      const { data } = await axios.post("http://localhost:5000/api/task/createTask", payload)
+      if (data) {
+        setCreateTaskData({
+          taskCode: '',
+          title: '',
+          description: '',
+          status: '',
+          company_id: company?.company_id,
+          companyName: company?.companyName,
+          employeeCode: '',
+          employeeName: '',
+          employeeEmail: '',
+        });
+        history.push('/mytask/tasklist');
+      }
     }
   }
   return (

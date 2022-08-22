@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import TotalEmployee from './TotalEmployee';
+import TotalTask from './TotalTask';
 
 const drawerWidth = 240;
 
@@ -82,10 +84,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#3D6889",
+        color: "white",
     },
     fixedHeight: {
-        height: 240,
+        height: 150,
     },
 }));
 
@@ -99,17 +102,17 @@ export default function SubDashboard() {
         <Container maxWidth="lg" className={classes.container}>
             <Grid container spacing={3}>
                 {/* Chart */}
-                <Grid item xs={12} md={4} lg={3}>
+                <Grid item xs={12} md={4} lg={6}>
                     <Paper className={fixedHeightPaper}>
-                        <Deposits />
+                        <TotalEmployee />
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={4} lg={3}>
+                <Grid item xs={12} md={4} lg={6}>
                     <Paper className={fixedHeightPaper}>
-                        <Deposits />
+                        <TotalTask />
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={4} lg={3}>
+                {/* <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
                         <Deposits />
                     </Paper>
@@ -119,11 +122,12 @@ export default function SubDashboard() {
                     <Paper className={fixedHeightPaper}>
                         <Deposits />
                     </Paper>
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
-                        <Orders />
+                        {/* <Orders /> */} 
+                        {"Do Something"}
                     </Paper>
                 </Grid>
             </Grid>
