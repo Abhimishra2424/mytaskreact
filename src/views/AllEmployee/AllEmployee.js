@@ -61,6 +61,7 @@ const AllEmployee = () => {
   const handleEditEmployee = (e) => {
     e.preventDefault();
     editEmployee(selectedData);
+    setOpen(false);
   }
 
   return (
