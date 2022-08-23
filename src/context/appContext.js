@@ -54,7 +54,7 @@ const AppProvider = ({ children }) => {
 
   // axios
   const authFetch = axios.create({
-    baseURL: "http://localhost:5000/api/",
+    baseURL: "https://taskmaganer-apis-nodejs.herokuapp.com/api/",
   });
   // request
 
@@ -125,7 +125,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/company/login`,
+        `https://taskmaganer-apis-nodejs.herokuapp.com/api/company/login`,
         {
           companyEmail,
           companyPassword,

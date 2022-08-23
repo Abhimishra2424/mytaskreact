@@ -42,7 +42,7 @@ function Row(props) {
   const fetchHistory = async () => {
     setLoading(true);
     const response = await axios.post(
-      `http://localhost:5000/api/task/getTaskHistoryCompanyId/${row.taskCode}`
+      `https://taskmaganer-apis-nodejs.herokuapp.com/api/task/getTaskHistoryCompanyId/${row.taskCode}`
     );
     setDataHistory(response.data);
     setLoading(false);
