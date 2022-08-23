@@ -57,7 +57,7 @@ const DoneTaskTable = () => {
 
   const closeTask = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("http://localhost:5000/api/task/taskClose", selectedData);
+    const { data } = await axios.post("https://taskmaganer-apis-nodejs.herokuapp.com/api/task/taskClose", selectedData);
     console.log(data);
   };
 

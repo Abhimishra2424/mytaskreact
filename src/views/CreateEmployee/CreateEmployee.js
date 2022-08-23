@@ -53,7 +53,7 @@ const CreateEmployee = () => {
             companyName: newCompany?.companyName
         }
 
-        const { data } = await axios.post("http://localhost:5000/api/employee/createemployee", payload)
+        const { data } = await axios.post("https://taskmaganer-apis-nodejs.herokuapp.com/api/employee/createemployee", payload)
         if (data.msg === "Employee registered") {
             toast.success(data.msg)
             setEmployeeData({
