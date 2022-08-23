@@ -57,7 +57,7 @@ export default function LandingPage() {
                     </nav>
 
                     <div className="text-center bg-gray-50 text-gray-800 py-24 px-6">
-                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12"> Adansa <br /><span className="text-blue-600"> Adansa Task Management System . </span></h1>
+                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12"> MyTask <br /><span className="text-blue-600"> Task Management System . </span></h1>
                         <Button
                             variant="contained"
                             color="primary"
