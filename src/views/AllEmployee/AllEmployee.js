@@ -42,6 +42,7 @@ const AllEmployee = () => {
 
   useEffect(() => {
     getAllEmployeescompanyId();
+// eslint-disable-next-line 
   }, []);
 
   const handleChangePage = (event, newPage) => {

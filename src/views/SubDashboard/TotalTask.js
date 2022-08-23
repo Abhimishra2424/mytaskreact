@@ -9,6 +9,7 @@ export default function TotalTask() {
   useEffect(() => {
     const searchParam = "";
     getTaskSearchParam(searchParam);
+    // eslint-disable-next-line
   }, []);
 
   return (

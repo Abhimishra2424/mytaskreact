@@ -8,6 +8,7 @@ export default function TotalEmployee() {
 
   useEffect(()=>{
     getAllEmployeescompanyId()
+    // eslint-disable-next-line
   },[])
 
   const getTotalEmployee = AllTasks.map(task => task.employeeName);

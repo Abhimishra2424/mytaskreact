@@ -141,6 +141,7 @@ export default function Notifications() {
 
   useEffect(() => {
     getAllTaskByCompanyId();
+    // eslint-disable-next-line
   }, []);
 
   return (

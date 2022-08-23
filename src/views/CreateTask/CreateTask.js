@@ -35,6 +35,7 @@ const CreateTask = () => {
 
   const [company_id, setCompany_id] = useState(null);
   const [companyName, setCompanyName] = useState("");
+  // eslint-disable-next-line
   const [employeeName, setEmployeeName] = useState("");
   const [employeeEmail, setEmployeeEmail] = useState("");
   const [employeeCode, setEmployeeCode] = useState("");
@@ -160,6 +161,7 @@ const CreateTask = () => {
       setEmployeeEmail("");
       setEmployeeCode("");
     }
+    // eslint-disable-next-line 
   }, [createTaskData.employeeName]);
 
   return (

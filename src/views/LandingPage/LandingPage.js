@@ -1,28 +1,12 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import RealMeLogo from '../../../src/realbooks.png'
-import { useAppContext } from '../../context/appContext';
-
-
-const useStyles = makeStyles({
-    button: {
-        background: '#304ED8',
-        color: '#fff',
-        '&:hover': {
-            background: '#304ED8',
-            color:"black",
-        },
-    }
-});
+;
 
 export default function LandingPage() {
-    const classes = useStyles();
-    const { company,} =
-    useAppContext()
-
     return (
         <React.Fragment>
             <div>
