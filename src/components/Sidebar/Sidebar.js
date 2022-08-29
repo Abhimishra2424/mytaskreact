@@ -2,12 +2,11 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-
 
 import styles from "../../assets/jss/material-dashboard-react/components/sidebarStyle.js";
 import { useAppContext } from "../../context/appContext.js";
@@ -129,7 +128,6 @@ export default function Sidebar(props) {
               </Button>
             )}
 
-            <Divider />
             {iswho === "employee" ? (
               ""
             ) : (
@@ -141,6 +139,19 @@ export default function Sidebar(props) {
                 fullWidth
               >
                 <Link to="/mytask/AllEmployee"> {"All Employee"}</Link>
+              </Button>
+            )}
+            {iswho === "company" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+              >
+                <Link to="/mytask/employee/createNote"> {"Create Note"}</Link>
               </Button>
             )}
           </div>
@@ -196,6 +207,7 @@ export default function Sidebar(props) {
                 <Link to="/mytask/employee/tasklist"> {"Assign Task"}</Link>
               </Button>
             )}
+                <Divider />
             {iswho === "employee" ? (
               ""
             ) : (
@@ -227,7 +239,6 @@ export default function Sidebar(props) {
               </Button>
             )}
 
-            <Divider />
             {iswho === "employee" ? (
               ""
             ) : (
@@ -239,6 +250,19 @@ export default function Sidebar(props) {
                 fullWidth
               >
                 <Link to="/mytask/AllEmployee"> {"All Employee"}</Link>
+              </Button>
+            )}
+            {iswho === "company" ? (
+              ""
+            ) : (
+              <Button
+                style={{
+                  marginTop: "10px",
+                  color: "white",
+                }}
+                fullWidth
+              >
+                <Link to="/mytask/employee/createNote"> {"Create Note"}</Link>
               </Button>
             )}
           </div>
