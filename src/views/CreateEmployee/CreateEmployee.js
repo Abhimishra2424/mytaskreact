@@ -1,82 +1,85 @@
-import { Box, Button, TextField, Typography, } from '@material-ui/core'
-import React, { useState } from 'react'
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { useAppContext } from '../../context/appContext';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {useHistory} from 'react-router-dom'
-
-
+import { Box, Button, Typography } from "@material-ui/core";
+import React  from "react";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import { useAppContext } from "../../context/appContext";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useHistory } from "react-router-dom";
+import { Field, Form, Formik } from "formik";
+import {
+  FormikAutocompleteComponent,
+  FormikTextFieldComponent,
+} from "../../utilities/formutilities";
 
 const CreateEmployee = () => {
-    const { company } = useAppContext();
-    const [employeeData, setEmployeeData] = useState({
-        employeeCode: "",
-        employeeName: '',
-        employeeEmail: '',
-        employeePassword: "",
-        employeeRole: "",
-        company_id: "",
-        companyName: ""
+  const { company } = useAppContext();
+  // const [employeeData, setEmployeeData] = useState({
+  //   employeeCode: "",
+  //   employeeName: "",
+  //   employeeEmail: "",
+  //   employeePassword: "",
+  //   employeeRole: "",
+  //   company_id: "",
+  //   companyName: "",
+  // });
+  const history = useHistory();
 
-    })
-    const history = useHistory()
-    const EmployeeRole = [
-        {
-            value: 'employee',
-            label: 'employee'
-        },
-        {
-            value: 'subAdmin',
-            label: 'subAdmin'
-        }
-
-    ]
-
-  
-    const createEmployee = async (e) => {
-        e.preventDefault();
-        if (!employeeData.employeeName || !employeeData.employeeEmail || !employeeData.employeePassword || !employeeData.employeeRole || !employeeData.employeeCode) {
-            return toast.error("Please fill all the fields required");
-        }
-        const newCompany = JSON.parse(company)
-        let payload = {
-            employeeCode: employeeData.employeeCode,
-            employeeName: employeeData.employeeName,
-            employeeEmail: employeeData.employeeEmail,
-            employeePassword: employeeData.employeePassword,
-            employeeRole: employeeData.employeeRole,
-            company_id: newCompany?.company_id,
-            companyName: newCompany?.companyName
-        }
-
-        const { data } = await axios.post("https://taskmaganer-apis-nodejs.herokuapp.com/api/employee/createemployee", payload)
-        if (data.msg === "Employee registered") {
-            toast.success(data.msg)
-            setEmployeeData({
-                employeeCode: "",
-                employeeName: '',
-                employeeEmail: '',
-                employeePassword: "",
-                employeeRole: "",
-            })
-            history.push("/mytask/AllEmployee")
-        }
+  const createEmployee = async ( values) => {
+    if (
+      !values.employeeName ||
+      !values.employeeEmail ||
+      !values.employeePassword ||
+      !values.employeeRole ||
+      !values.employeeCode
+    ) {
+      return toast.error("Please fill all the fields required");
     }
+    const newCompany = JSON.parse(company);
+    let payload = {
+      employeeCode: values.employeeCode,
+      employeeName: values.employeeName,
+      employeeEmail: values.employeeEmail,
+      employeePassword: values.employeePassword,
+      employeeRole: values.employeeRole,
+      company_id: newCompany?.company_id,
+      companyName: newCompany?.companyName,
+    };
 
-    return (
-        <Grid container spacing={2}>
-            <ToastContainer />
-            <Grid item xs={12}>
-                <Typography>Create Employee</Typography>
-                <Paper >
-                    <Box p={2}>
-                        <div className="mb-12 lg:mb-0">
-                            <div className="block">
-                                <form onSubmit={createEmployee}>
+
+    const { data } = await axios.post(
+      "https://taskmaganer-apis-nodejs.herokuapp.com/api/employee/createemployee",
+      payload
+    );
+    
+    if (data.msg === "Employee registered") {
+      toast.success(data.msg);
+      history.push("/mytask/AllEmployee");
+    }
+  };
+
+  const EmployeeRole = [
+    {
+      value: "employee",
+      label: "employee",
+    },
+    {
+      value: "subAdmin",
+      label: "subAdmin",
+    },
+  ];
+
+  return (
+    <Grid container spacing={2}>
+      <ToastContainer />
+      <Grid item xs={12}>
+        <Typography>Create Employee</Typography>
+        <Paper>
+          <Box p={2}>
+            <div className="mb-12 lg:mb-0">
+              <div className="block">
+                {/* <form onSubmit={createEmployee}>
                                     <TextField
                                         id="outlined-basic"
                                         label="Employee Code"
@@ -137,15 +140,82 @@ const CreateEmployee = () => {
                                     >
                                         Add new Employee
                                     </Button>
-                                </form>
-                            </div>
-                        </div>
-                    </Box>
+                                </form> */}
+                <Formik
+                  id="commissionForm"
+                  size="large"
+                  width={5}
+                  initialValues={{
+                    employeeCode: "",
+                    employeeName: "",
+                    employeeEmail: "",
+                    employeePassword: "",
+                    employeeRole: "",
+                  }}
+                  // validationSchema={}
+                  onSubmit={(values, { resetForm }) => {
+                    createEmployee(values);
+                  }}
+                  render={({ handleSubmit }) => (
+                    <Form onSubmit={handleSubmit}>
+                      <Field
+                        name="employeeCode"
+                        component={FormikTextFieldComponent}
+                        fullWidth
+                        variant="outlined"
+                        label="Employee Code"
+                        margin="normal"
+                      />
+                      <Field
+                        name="employeeName"
+                        component={FormikTextFieldComponent}
+                        fullWidth
+                        variant="outlined"
+                        label="Employee Name"
+                        margin="normal"
+                      />
+                      <Field
+                        name="employeeEmail"
+                        component={FormikTextFieldComponent}
+                        fullWidth
+                        variant="outlined"
+                        label="employeeEmail"
+                        margin="normal"
+                      />
+                      <Field
+                        name="employeePassword"
+                        component={FormikTextFieldComponent}
+                        fullWidth
+                        variant="outlined"
+                        label="employeePassword"
+                        margin="normal"
+                      />
+                      <Field
+                        name="employeeRole"
+                        component={FormikAutocompleteComponent}
+                        options={EmployeeRole}
+                      />
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        type="submit"
+                        style={{
+                          backgroundColor: "#3d6889",
+                          color: "white",
+                        }}
+                      >
+                        Add new Employee
+                      </Button>
+                    </Form>
+                  )}
+                />
+              </div>
+            </div>
+          </Box>
+        </Paper>
+      </Grid>
+    </Grid>
+  );
+};
 
-                </Paper>
-            </Grid>
-        </Grid>
-    )
-}
-
-export default CreateEmployee
+export default CreateEmployee;
