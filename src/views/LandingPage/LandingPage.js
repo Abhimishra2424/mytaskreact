@@ -3,8 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import RealMeLogo from '../../../src/realbooks.png'
-;
+import AssignmentIcon from '@material-ui/icons/Assignment';
+
 
 export default function LandingPage() {
     return (
@@ -14,13 +14,8 @@ export default function LandingPage() {
                     <nav className="navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between">
                         <div className="px-6 w-full flex flex-wrap items-center justify-between">
                             <div className="flex items-center">
-
                                 <Link className="navbar-brand text-blue-600" to="/">
-                                    <img src={RealMeLogo} alt="RealMe" style={{
-                                        width: '40px',
-                                        height: '40px',
-                                    }}
-                                    />
+                                    <AssignmentIcon  fontSize='large'  />
                                 </Link>
                             </div>
                             <div className="flex items-center lg:ml-auto ">
