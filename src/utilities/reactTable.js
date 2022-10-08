@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow'
 import { Button } from '@material-ui/core'
 import EditIcon from "@material-ui/icons/Edit";
 
-const ReactTableDiv = ({ columns, data, setSelectedData, passBtn, handleDelete }) => {
+const ReactTableDiv = ({ columns, data, setSelectedData, passBtn, handleDelete , handleEdit }) => {
 
     const { getTableProps, headerGroups, rows, prepareRow } = useTable(
         {
@@ -27,7 +27,7 @@ const ReactTableDiv = ({ columns, data, setSelectedData, passBtn, handleDelete }
                                     color="primary"
                                     startIcon={<EditIcon />}
                                     size="small"
-                                    onClick={(e) => setSelectedData(e, row.original)}>Edit</Button> : null}
+                                    onClick={(e) => handleEdit(e, row.original)}>Edit</Button> : null}
 
                                 {passBtn ? <Button
                                     color="secondary"
