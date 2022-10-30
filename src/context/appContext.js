@@ -103,7 +103,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/company/register`,
+        `https://taskmaganer-apis-nodejs.herokuapp.com/api/company/register`,
         company
       );
 
@@ -224,7 +224,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_EMPLOYEE_BEGIN });
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/employee/employeeLogin`,
+        `https://taskmaganer-apis-nodejs.herokuapp.com/api/employee/employeeLogin`,
         {
           employeeEmail,
           employeePassword,
