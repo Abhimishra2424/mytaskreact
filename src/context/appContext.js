@@ -28,6 +28,9 @@ import {
   EDIT_EMPLOYEE_BEGIN,
   EDIT_EMPLOYEE_SUCCESS,
   EDIT_EMPLOYEE_ERROR,
+  CREATE_NOTES_BEGIN,
+  CREATE_NOTES_SUCCESS,
+  CREATE_NOTES_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -45,6 +48,9 @@ const initialState = {
   token: token ? token : null,
   error: null,
   iswho: iswho ? iswho : null,
+  note: {
+    msg: "",
+  },
 };
 
 const AppContext = React.createContext();
@@ -249,7 +255,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const editEmployee = async ( employee ) => {
+  const editEmployee = async (employee) => {
     dispatch({ type: EDIT_EMPLOYEE_BEGIN });
     try {
       const { data } = await authFetch.post(`employee/editEmployee`, {
@@ -265,7 +271,29 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-  }
+  };
+
+  const createEmpNote = async (payload) => {
+    dispatch({ type: CREATE_NOTES_BEGIN });
+    try {
+      const { data } = await axios.post(
+        `https://taskmaganer-apis-nodejs.herokuapp.com/api/employee/employeeNoteCreate`,
+        payload
+      );
+
+      const {  msg } = data;
+      dispatch({
+        type: CREATE_NOTES_SUCCESS,
+        payload: {  msg },
+      });
+
+    } catch (error) {
+      dispatch({
+        type: CREATE_NOTES_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -280,6 +308,7 @@ const AppProvider = ({ children }) => {
         employeeLogin,
         getAllTaskByEmployeeCode,
         editEmployee,
+        createEmpNote,
       }}
     >
       {children}

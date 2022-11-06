@@ -5,8 +5,7 @@ import { useAppContext } from '../../context/appContext';
 import { useHistory } from "react-router-dom"
 
 const CompanyLogin = () => {
-  const { loginCompany } =
-    useAppContext()
+  const { loginCompany } =  useAppContext()
     const history = useHistory();
   const [companyLoginData, setCompanyLoginData] = useState({
     companyEmail: '',
