@@ -69,7 +69,7 @@ export default function Sidebar(props) {
             >
               <Link to="/mytask/dashboard"> {"Dashboard"}</Link>
             </Button>
-            <Divider />
+            {/* <Divider /> */}
             <Button
               size="small"
               style={{
@@ -80,7 +80,7 @@ export default function Sidebar(props) {
             >
               <Link to="/mytask/tasklist"> {"All Task List"}</Link>
             </Button>
-            <Divider />
+            {/* <Divider /> */}
             {iswho === "company" ? (
               ""
             ) : (
@@ -96,7 +96,7 @@ export default function Sidebar(props) {
               </Button>
             )}
 
-            <Divider />
+            {/* <Divider /> */}
             {iswho === "employee" ? (
               ""
             ) : (
@@ -112,7 +112,7 @@ export default function Sidebar(props) {
               </Button>
             )}
 
-            <Divider />
+            {/* <Divider /> */}
             {iswho === "employee" ? (
               ""
             ) : (
@@ -181,7 +181,7 @@ export default function Sidebar(props) {
             >
               <Link to="/mytask/dashboard"> {"Dashboard"}</Link>
             </Button>
-            <Divider />
+            {/* <Divider /> */}
             <Button
               size="small"
               style={{
@@ -192,7 +192,7 @@ export default function Sidebar(props) {
             >
               <Link to="/mytask/tasklist"> {"All Task List"}</Link>
             </Button>
-            <Divider />
+            {/* <Divider /> */}
             {iswho === "company" ? (
               ""
             ) : (
@@ -207,7 +207,7 @@ export default function Sidebar(props) {
                 <Link to="/mytask/employee/tasklist"> {"Assign Task"}</Link>
               </Button>
             )}
-                <Divider />
+                {/* <Divider /> */}
             {iswho === "employee" ? (
               ""
             ) : (
@@ -223,7 +223,7 @@ export default function Sidebar(props) {
               </Button>
             )}
 
-            <Divider />
+            {/* <Divider /> */}
             {iswho === "employee" ? (
               ""
             ) : (

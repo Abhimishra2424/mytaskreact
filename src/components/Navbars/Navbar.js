@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 // @material-ui/core components
@@ -13,25 +13,35 @@ import Menu from "@material-ui/icons/Menu";
 import AdminNavbarLinks from "./AdminNavbarLinks.js";
 import RTLNavbarLinks from "./RTLNavbarLinks.js";
 import Button from "../../components/CustomButtons/Button.js";
-
+import jwt_decode from "jwt-decode";
 //hooks
 // import { useRouteName } from "../../hooks";
 
 import styles from "../../assets/jss/material-dashboard-react/components/headerStyle.js";
-import { Typography } from "@material-ui/core";
+import { isWidthDown, Typography } from "@material-ui/core";
 import { useAppContext } from "../../context/appContext.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
-
-  const { company , iswho } = useAppContext();
+  const { company, iswho, token } = useAppContext();
   const classes = useStyles();
+
+  const [empData, setEmpData] = useState({});
+  const [companyData, setCompanyData] = useState({});
   // const routeName = useRouteName();
   const { color } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color,
   });
+  console.log("token", token);
+
+  useEffect(() => {
+    var decoded = jwt_decode(token);
+    console.log("decoded", decoded);
+    setEmpData(decoded.payload.employee);
+    setCompanyData(decoded.payload.company);
+  }, [token]);
 
   return (
     <AppBar
@@ -51,7 +61,33 @@ export default function Header(props) {
               fontWeight: "bold",
             }}
           >
-            {iswho === "company" ? "Admin" : "Employee"}
+            {iswho === "company" ? (
+              <>
+                {" "}
+                <Typography
+                  align="left"
+                  style={{ fontSize: "16px" }}
+                  variant="overline"
+                >
+                  {companyData.companyName}
+                </Typography>
+                <Typography
+                  align="right"
+                  style={{ fontSize: "16px" }}
+                  // variant="overline"
+                >
+                  {companyData.companyEmail}
+                </Typography>
+              </>
+            ) : (
+              <Typography
+                align="left"
+                style={{ fontSize: "16px" }}
+                variant="overline"
+              >
+                {empData.employeeName}
+              </Typography>
+            )}
           </Typography>
         </div>
 
