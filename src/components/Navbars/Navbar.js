@@ -63,28 +63,15 @@ export default function Header(props) {
           >
             {iswho === "company" ? (
               <>
-                {" "}
-                <Typography
-                  align="left"
-                  style={{ fontSize: "16px" }}
-                  variant="overline"
-                >
+                <Typography align="left" style={{ fontSize: "16px" }} variant="overline" >
                   {companyData.companyName}
                 </Typography>
-                <Typography
-                  align="right"
-                  style={{ fontSize: "16px" }}
-                  // variant="overline"
-                >
+                <Typography  style={{ fontSize: "16px" }}  >
                   {companyData.companyEmail}
                 </Typography>
               </>
             ) : (
-              <Typography
-                align="left"
-                style={{ fontSize: "16px" }}
-                variant="overline"
-              >
+              <Typography align="left" style={{ fontSize: "16px" }} variant="overline" >
                 {empData.employeeName}
               </Typography>
             )}

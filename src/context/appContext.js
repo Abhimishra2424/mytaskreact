@@ -31,6 +31,9 @@ import {
   CREATE_NOTES_BEGIN,
   CREATE_NOTES_SUCCESS,
   CREATE_NOTES_ERROR,
+  GET_ALL_NOTES,
+  GET_NOTES_SUCCESS,
+  GET_NOTES_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -45,6 +48,7 @@ const initialState = {
   AllEmployees: [],
   AllassignedTasks: [],
   AllTasks: [],
+  AllNotes : [],
   token: token ? token : null,
   error: null,
   iswho: iswho ? iswho : null,
@@ -295,6 +299,23 @@ const AppProvider = ({ children }) => {
     }
   };
 
+
+  const getAllNotesByEmployeeIdandCompanyId = async () => {
+    dispatch({ type: GET_ALL_NOTES });
+    try {
+      const { data } = await  authFetch.get(`employee/getAllNotesByEmployeeIdandCompanyId`);
+      dispatch({
+        type: GET_NOTES_SUCCESS,
+        payload: { data },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_NOTES_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -309,6 +330,7 @@ const AppProvider = ({ children }) => {
         getAllTaskByEmployeeCode,
         editEmployee,
         createEmpNote,
+        getAllNotesByEmployeeIdandCompanyId,
       }}
     >
       {children}

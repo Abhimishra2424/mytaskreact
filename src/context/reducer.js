@@ -26,6 +26,9 @@ import {
   EDIT_EMPLOYEE_ERROR,
   CREATE_NOTES_BEGIN,
   CREATE_NOTES_SUCCESS,
+  GET_ALL_NOTES,
+  GET_NOTES_SUCCESS,
+  GET_NOTES_ERROR,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -195,6 +198,24 @@ const reducer = (state, action) => {
         ...state.note,
         msg: action.payload.msg,
       },
+    };
+  }
+
+  if (action.type === GET_ALL_NOTES) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === GET_NOTES_SUCCESS) {
+    return {
+      ...state,
+      isLoading: true,
+      AllNotes: action.payload.data,
+    };
+  }
+  if (action.type === GET_NOTES_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      error: action.payload.msg,
     };
   }
 

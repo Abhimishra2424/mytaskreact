@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const CreateNote = () => {
   const { createEmpNote, token , note } = useAppContext();
   const classes = useStyles();
+  let navigate = useHistory()
 
   const [createNote, setCreateNote] = useState({
     note_id: "",
@@ -47,11 +48,13 @@ const CreateNote = () => {
       note_id: createNote.note_id ? createNote.note_id : 0,
     };
     createEmpNote(payload);
-    
     if(note !== ""){
       let msg = note.msg ? note.msg : "Note created" 
       toast.success(msg)
       setCreateNote({note_id:"", notes:""})
+      setTimeout(() => {
+        navigate.push("/mytask/employee/AllNotes")
+      }, 2000);
      }
   };
 

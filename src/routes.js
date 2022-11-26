@@ -7,6 +7,7 @@ import CreateEmployee from "./views/CreateEmployee/CreateEmployee";
 import AllEmployee from "./views/AllEmployee/AllEmployee";
 import AssignTask from "./views/AssignTask/AssignTask";
 import CreateNote from "./views/CreateNote/CreateNote";
+import NoteList from "./views/NotesList/NoteList";
 
 
 const dashboardRoutes = [
@@ -39,6 +40,12 @@ const dashboardRoutes = [
     name: "Create Note",
     icon: "content_paste",
     component: CreateNote,
+  },
+  {
+    path: "/mytask/employee/AllNotes",
+    name: "Notes",
+    icon: "content_paste",
+    component: NoteList,
   },
   {
     path: "/mytask/createTask",
