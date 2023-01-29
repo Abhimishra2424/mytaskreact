@@ -114,7 +114,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_API_URL_END}api/company/register`,
+        `https://web-production-e9b1.up.railway.app/api/company/register`,
         company
       );
 
@@ -136,7 +136,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_API_URL_END}api/company/login`,
+        `https://web-production-e9b1.up.railway.app/api/company/login`,
         {
           companyEmail,
           companyPassword,
@@ -235,7 +235,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_EMPLOYEE_BEGIN });
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_API_URL_END}api/employee/employeeLogin`,
+        `https://web-production-e9b1.up.railway.app/api/employee/employeeLogin`,
         {
           employeeEmail,
           employeePassword,
@@ -282,7 +282,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CREATE_NOTES_BEGIN });
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_API_URL_END}api/employee/employeeNoteCreate`,
+        `https://web-production-e9b1.up.railway.app/api/employee/employeeNoteCreate`,
         payload
       );
 
