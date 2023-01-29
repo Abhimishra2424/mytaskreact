@@ -63,8 +63,9 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // axios
+ 
   const authFetch = axios.create({
-    baseURL: "https://taskmaganer-apis-nodejs.herokuapp.com/api/",
+    baseURL: "https://web-production-e9b1.up.railway.app/api/",
   });
   // request
 
@@ -113,7 +114,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
-        `https://taskmaganer-apis-nodejs.herokuapp.com/api/company/register`,
+        `${process.env.REACT_API_URL_END}api/company/register`,
         company
       );
 
@@ -135,7 +136,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
-        `https://taskmaganer-apis-nodejs.herokuapp.com/api/company/login`,
+        `${process.env.REACT_API_URL_END}api/company/login`,
         {
           companyEmail,
           companyPassword,
@@ -234,7 +235,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_EMPLOYEE_BEGIN });
     try {
       const { data } = await axios.post(
-        `https://taskmaganer-apis-nodejs.herokuapp.com/api/employee/employeeLogin`,
+        `${process.env.REACT_API_URL_END}api/employee/employeeLogin`,
         {
           employeeEmail,
           employeePassword,
@@ -281,7 +282,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CREATE_NOTES_BEGIN });
     try {
       const { data } = await axios.post(
-        `https://taskmaganer-apis-nodejs.herokuapp.com/api/employee/employeeNoteCreate`,
+        `${process.env.REACT_API_URL_END}api/employee/employeeNoteCreate`,
         payload
       );
 
