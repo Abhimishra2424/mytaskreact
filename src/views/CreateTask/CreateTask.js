@@ -92,7 +92,7 @@ const CreateTask = () => {
       return alert("Please fill all fields");
     } else {
       const { data } = await axios.post(
-        "https://taskmaganer-apis-nodejs.herokuapp.com/api/task/createTask",
+        "https://web-production-e9b1.up.railway.app/api/task/createTask",
         payload
       );
       if (data) {

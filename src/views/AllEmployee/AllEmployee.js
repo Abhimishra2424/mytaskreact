@@ -57,7 +57,7 @@ const AllEmployee = () => {
             window.confirm("Are you sure you want to delete this employee?")
           ) {
             const { data } = await axios.post(
-              `https://taskmaganer-apis-nodejs.herokuapp.com/api/employee/deleteEmployee`,
+              `https://web-production-e9b1.up.railway.app/api/employee/deleteEmployee`,
               { employee_id }
             );
             toast.success(`${data.msg}`);
