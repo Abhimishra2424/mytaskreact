@@ -65,7 +65,7 @@ const AppProvider = ({ children }) => {
   // axios
  
   const authFetch = axios.create({
-    baseURL: "https://web-production-e9b1.up.railway.app/api/",
+    baseURL: "https://taskbackend-7x94.onrender.com/api/",
   });
   // request
 
@@ -114,7 +114,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
-        `https://web-production-e9b1.up.railway.app/api/company/register`,
+        `https://taskbackend-7x94.onrender.com/api/company/register`,
         company
       );
 
@@ -136,7 +136,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_COMPANY_BEGIN });
     try {
       const { data } = await axios.post(
-        `https://web-production-e9b1.up.railway.app/api/company/login`,
+        `https://taskbackend-7x94.onrender.com/api/company/login`,
         {
           companyEmail,
           companyPassword,
@@ -235,7 +235,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_EMPLOYEE_BEGIN });
     try {
       const { data } = await axios.post(
-        `https://web-production-e9b1.up.railway.app/api/employee/employeeLogin`,
+        `https://taskbackend-7x94.onrender.com/api/employee/employeeLogin`,
         {
           employeeEmail,
           employeePassword,
@@ -282,7 +282,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CREATE_NOTES_BEGIN });
     try {
       const { data } = await axios.post(
-        `https://web-production-e9b1.up.railway.app/api/employee/employeeNoteCreate`,
+        `https://taskbackend-7x94.onrender.com/api/employee/employeeNoteCreate`,
         payload
       );
 

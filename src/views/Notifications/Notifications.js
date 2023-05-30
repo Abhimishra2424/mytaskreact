@@ -42,7 +42,7 @@ function Row(props) {
   const fetchHistory = async () => {
     setLoading(true);
     const response = await axios.post(
-      `https://web-production-e9b1.up.railway.app/api/task/getTaskHistoryCompanyId/${row.taskCode}`
+      `https://taskbackend-7x94.onrender.com/api/task/getTaskHistoryCompanyId/${row.taskCode}`
     );
     setDataHistory(response.data);
     setLoading(false);

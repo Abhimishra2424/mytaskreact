@@ -77,7 +77,7 @@ export default function TableList() {
 
   const updateTask = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("https://web-production-e9b1.up.railway.app/api/task/updateTask", selectedData)
+    const { data } = await axios.post("https://taskbackend-7x94.onrender.com/api/task/updateTask", selectedData)
     if (data) {
       setOpen(false);
       getAllTaskByCompanyId();
