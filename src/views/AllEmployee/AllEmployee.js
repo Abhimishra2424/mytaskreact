@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { useAppContext } from "../../context/appContext";
 import { Button, TextField } from "@material-ui/core";
 
@@ -19,7 +18,7 @@ import { AllEmpColumns } from "./model";
 import { useCallback } from "react";
 
 const AllEmployee = () => {
-  const { getAllEmployeescompanyId, AllEmployees, error, editEmployee } =
+  const { getAllEmployeescompanyId, AllEmployees, error, editEmployee , iswho } =
     useAppContext();
 
   const [open, setOpen] = React.useState(false);
@@ -27,10 +26,15 @@ const AllEmployee = () => {
   const [selectedData, setSelectedData] = useState({});
   const [passBtn, setPassBtn] = useState(true);
 
+
   useEffect(() => {
-    getAllEmployeescompanyId();
-    // eslint-disable-next-line
-  }, []);
+    if (iswho.trim() === "employee") {
+      return; // Early return, no further execution of the hook
+    } else {
+      getAllEmployeescompanyId();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [iswho]);
 
   const handleClose = () => {
     setOpen(false);

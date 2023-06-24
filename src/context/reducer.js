@@ -54,12 +54,12 @@ const reducer = (state, action) => {
   }
 
   if (action.type === LOGIN_COMPANY_BEGIN) {
-    return { ...state, isLoading: true };
+    return { ...state, loginState: true };
   }
   if (action.type === LOGIN_COMPANY_SUCCESS) {
     return {
       ...state,
-      isLoading: true,
+      loginState: false,
       token: action.payload.token,
       company: action.payload.company,
       iswho: action.payload.iswho,
@@ -68,7 +68,7 @@ const reducer = (state, action) => {
   if (action.type === LOGIN_COMPANY_ERROR) {
     return {
       ...state,
-      isLoading: false,
+      loginState: false,
       error: action.payload.msg,
     };
   }
@@ -133,12 +133,12 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === LOGIN_EMPLOYEE_BEGIN) {
-    return { ...state, isLoading: true };
+    return { ...state, loginState: true };
   }
   if (action.type === LOGIN_EMPLOYEE_SUCCESS) {
     return {
       ...state,
-      isLoading: true,
+      loginState: false,
       token: action.payload.token,
       employee: action.payload.employee,
       iswho: action.payload.iswho,
@@ -148,7 +148,7 @@ const reducer = (state, action) => {
   if (action.type === LOGIN_EMPLOYEE_ERROR) {
     return {
       ...state,
-      isLoading: false,
+      loginState: false,
       error: action.payload.msg,
     };
   }

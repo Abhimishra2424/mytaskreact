@@ -11,34 +11,27 @@ import Hidden from "@material-ui/core/Hidden";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks.js";
-import RTLNavbarLinks from "./RTLNavbarLinks.js";
-import Button from "../../components/CustomButtons/Button.js";
 import jwt_decode from "jwt-decode";
 //hooks
-// import { useRouteName } from "../../hooks";
 
 import styles from "../../assets/jss/material-dashboard-react/components/headerStyle.js";
-import { isWidthDown, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useAppContext } from "../../context/appContext.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
-  const { company, iswho, token } = useAppContext();
+  const { iswho, token } = useAppContext();
   const classes = useStyles();
 
   const [empData, setEmpData] = useState({});
   const [companyData, setCompanyData] = useState({});
   // const routeName = useRouteName();
   const { color } = props;
-  const appBarClasses = classNames({
-    [" " + classes[color]]: color,
-  });
-  console.log("token", token);
+  const appBarClasses = classNames({[" " + classes[color]]: color});
 
   useEffect(() => {
-    var decoded = jwt_decode(token);
-    console.log("decoded", decoded);
+    let decoded = jwt_decode(token);
     setEmpData(decoded.payload.employee);
     setCompanyData(decoded.payload.company);
   }, [token]);
@@ -79,7 +72,6 @@ export default function Header(props) {
         </div>
 
         <Hidden smDown implementation="css">
-          {/* {props.rtlActive ? <RTLNavbarLinks /> : } */}
           <AdminNavbarLinks />
         </Hidden>
         <Hidden mdUp implementation="css">

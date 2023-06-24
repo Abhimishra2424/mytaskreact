@@ -4,12 +4,16 @@ import { useAppContext } from "../../context/appContext";
 
 
 export default function TotalEmployee() {
-  const { AllEmployees , AllTasks  , getAllEmployeescompanyId } = useAppContext();
-
-  useEffect(()=>{
-    getAllEmployeescompanyId()
-    // eslint-disable-next-line
-  },[])
+  const { AllEmployees , AllTasks  , getAllEmployeescompanyId , iswho } = useAppContext();
+  
+  useEffect(() => {
+    if (iswho.trim() === "employee") {
+      return; // Early return, no further execution of the hook
+    } else {
+      getAllEmployeescompanyId();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [iswho]);
 
   const getTotalEmployee = AllTasks.map(task => task.employeeName);
   const getUniqueEmployee = [...new Set(getTotalEmployee)];

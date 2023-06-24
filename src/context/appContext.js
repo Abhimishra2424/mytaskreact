@@ -43,6 +43,7 @@ const iswho = localStorage.getItem("iswho");
 
 const initialState = {
   isLoading: false,
+  loginState: false,
   company: company ? company : "",
   employee: employee ? employee : "",
   AllEmployees: [],

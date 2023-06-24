@@ -8,22 +8,29 @@ import CompanyRegister from "./views/companyRegister/CompanyRegister";
 import CompanyLogin from "./views/companyLogin/CompanyLogin";
 import PrivateRoute from "./components/PrivateRoute";
 import EmployeeLogin from "./views/employeeLogin/EmployeeLogin";
+import {
+  Button,
+  CircularProgress,
+  LinearProgress,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
 
 const App = () => {
-  const { token } = useAppContext();
+  const { token, loginState } = useAppContext();
   const history = useHistory();
 
   useEffect(() => {
     if (token) {
       history.push("/mytask");
-    }
-  }, [history, token])
-
-  useEffect(() => {
-    if (!token) {
+    }else{
       history.push("/");
     }
-  }, [history, token])
+  }, [history, token]);
+
+  if (loginState) {
+    return <LinearProgress color="primary" />;
+  }
 
   return (
     <Switch>
